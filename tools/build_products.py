@@ -1,246 +1,335 @@
 #!/usr/bin/env python3
-"""Generate static product pages for the Kisra Tech site.
+"""Generate detailed product pages for the Kisra Tech site.
 
-Reads DATA, writes ../products/<key>.html using the shared site CSS/nav/footer.
-Run from anywhere:  python3 tools/build_products.py
+Content lives in `_products_base.py` (DATA) + EXTRA below. Marketing PDFs are
+auto-detected from `assets/pdf/marketing/` (ku / ar / en variants).
+
+    python3 tools/build_products.py
 """
+import glob
 import html
 import os
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OUT = os.path.join(ROOT, "products")
+sys.path.insert(0, HERE)
+from _products_base import DATA  # noqa: E402
 
 WA = "https://wa.me/9647706947874"
 PHONE = "+964 770 694 7874"
 MAIL = "arkan.leki@gmail.com"
 
-# ---------------------------------------------------------------- content
-DATA = [
-    dict(
-        key="gihan",
-        ku="گیهان", en="Gihan",
-        kind_ku="سیستەمی بەڕێوەبردنی دوکان", kind_en="Retail ERP",
-        tag_ku="فرۆشتن ، کۆگا و ڕاپۆرت لە یەک شاشەدا . بۆ دوکانەکانی تاکە لق و فرە لق.",
-        tag_en="Sales, stock and reports in one screen — for single and multi-branch shops.",
-        price="$500+", price_ku="دۆلار و زیاتر", price_en="from",
-        overview_ku="گیهان سیستەمێکی تەواوی فرۆشتن و کۆگایە. هەر داواکارییەک لە هەر کەناڵێکەوە بێت — دوکان، کۆمەڵ، سۆشیاڵ میدیا یان ئەپی گەیاندن — لە یەک شوێن تۆمار دەکرێت و قازانجی ڕاستەقینە دەردەخات: نرخی فرۆشتن کەم کراوە لە تێچووی کاڵا، کۆمیشن و داشکاندن.",
-        overview_en="Gihan is a complete sales and stock system. Every order from every channel — storefront, wholesale, social media or delivery apps — is recorded in one place and shows real profit: sale price minus product cost, channel commission and discount.",
-        features=[
-            ("فرۆشتن لە چەند ئامێر و چەند لقێک بەیەکەوە", "Sell from several devices and branches at once"),
-            ("کۆگا و مێژووی جووڵەی هەموو کاڵایەک", "Stock and full movement history for every item"),
-            ("ڕاپۆرتی ڕۆژانە ، قازانج و قەرزی کڕیار", "Daily reports, profit and customer debt"),
-            ("بەکارهێنەر و دەسەڵات بۆ هەر کارمەندێک", "Users and permissions for every employee"),
-            ("کار دەکات لەسەر مۆبایل ، تابلێت و کۆمپیوتەر", "Works on phone, tablet and computer"),
-            ("کوردی و عەرەبی و ئینگلیزی لەگەڵ ڕاست بۆ چەپ", "Kurdish, Arabic and English with full RTL"),
-        ],
-        tech=["FASTAPI", "QUASAR PWA", "POSTGRESQL"],
-        shots=["gihan.webp", "gihan-1.webp", "gihan-2.webp"],
-        pdfs=[("kisra-gihan-sheet.pdf", "پەڕەی بەرهەم (١ لاپەڕە)", "Product sheet (1 page)"),
-              ("kisra-gihan-catalogue.pdf", "کاتالۆگی بەرهەم (٢ لاپەڕە)", "Product catalogue (2 pages)")],
-        faq=[("دامەزراندن چەند دەخایەنێت؟", "How long does setup take?",
-              "بەپێی قەبارەی دوکان ، بە زۆری چەند ڕۆژێک. داتای کۆنیش دەگوازرێتەوە.",
-              "A few days depending on shop size. Existing data is migrated as part of setup."),
-             ("پاڵپشتی هەیە؟", "Is support included?",
-              "٣٠ ڕۆژ گەرەنتی لەخۆدەگرێت. پاڵپشتی ساڵانە بە ٢٠٠ دۆلار بەردەستە.",
-              "30 days warranty included. Yearly support is available for $200.")],
-    ),
-    dict(
-        key="zuba",
-        ku="زوبا", en="Zuba",
-        kind_ku="سیستەمی بەڕێوەبردنی دابەشکردن", kind_en="Distribution ERP",
-        tag_ku="کۆگا ، کڕیار و قەرز بۆ کۆمپانیاکانی دابەشکردن و بەتاڵفرۆشی.",
-        tag_en="Stock, customers and debt for distribution and wholesale companies.",
-        price="$800+", price_ku="دۆلار و زیاتر", price_en="from",
-        overview_ku="زوبا بۆ کۆمپانیاکانی دابەشکردن دروست کراوە: کۆگای فرە شوێن، کڕین و گەڕاندنەوە، قەرزی کڕیار و دابینکەر، پارەدان و حیسابات، و ڕاپۆرتی بەشداران — هەمووی لە یەک سیستەمدا.",
-        overview_en="Zuba is built for distribution companies: multi-location stock, purchasing and returns, customer and supplier debt, payments and accounting, partner reports — all in one system.",
-        features=[
-            ("کۆگای فرە شوێن و مێژووی جووڵەی کاڵا", "Multi-location stock with movement history"),
-            ("کڕین ، گەڕاندنەوە و دابینکەران", "Purchasing, returns and suppliers"),
-            ("قەرزی کڕیار و دابینکەر بە حیسابی خۆکار", "Customer and supplier debt calculated automatically"),
-            ("پارەدان و حیسابات لە یەک شاشەدا", "Payments and accounting in one screen"),
-            ("ڕاپۆرتی بەشداران و قازانجی گشتی", "Partner reports and overall profit"),
-            ("کردارەکان بە کوردی و عەرەبی و ئینگلیزی", "Works in Kurdish, Arabic and English"),
-        ],
-        tech=["DJANGO", "DRF", "QUASAR", "POSTGRESQL"],
-        shots=["zuba.webp", "zuba-1.webp", "zuba-2.webp", "zuba-3.webp"],
-        pdfs=[("kisra-zuba-sheet.pdf", "پەڕەی بەرهەم (١ لاپەڕە)", "Product sheet (1 page)")],
-        faq=[("نرخ بەپێی چییە؟", "What sets the price?",
-              "قەبارەی کۆگا و ژمارەی لقەکان. سەرەتا لە ٨٠٠ دۆلارەوە.",
-              "Stock size and number of locations. Starting from $800."),
-             ("دەتوانێت لەگەڵ سیستەمی کۆن کار بکات؟", "Can it work with our old system?",
-              "بەڵێ ، داتا دەگوازرێتەوە و لە کاتی دامەزراندن ڕێکدەخرێت.",
-              "Yes — data is migrated and reconciled during setup.")],
-    ),
-    dict(
-        key="kapitan",
-        ku="کاپیتان پۆس", en="Kapitan POS",
-        kind_ku="سیستەمی فرۆشتنی خواردنگا", kind_en="Café POS",
-        tag_ku="پۆسێکی خێرا بۆ کافێ ، خواردنگا و چێشتخانە . بێ ئینتەرنێت کار دەکات.",
-        tag_en="A fast POS for cafés and restaurants — works fully offline.",
-        price="$600+", price_ku="دۆلار و زیاتر", price_en="from",
-        overview_ku="کاپیتان پۆس لەسەر ئامێرەکانی خۆت کار دەکات: تابلێتی گارسۆن، تابلێتی چێشتخانە و تابلێتی کاش — تەنها وەک پاڵپشتی، داتا دەکاتە کلۆد. ئەگەر وایفای بپچڕێت، فرۆشتن ناوەستێت.",
-        overview_en="Kapitan POS runs on your own devices: waiter tablet, kitchen display and till — the cloud is only a backup. If the Wi-Fi drops, selling does not stop.",
-        features=[
-            ("فرۆشتن لەسەر تابلێت بە یەک دەست لێدان", "Sell from a tablet in one tap"),
-            ("چاپەری بلوتووث ٨٠ ملم بۆ پسوولە", "80 mm Bluetooth receipt printing"),
-            ("مێز و شاشەی چێشتخانە بەیەکەوە", "Tables and kitchen display linked"),
-            ("کارکردنی ئۆفلاین و هاوکاتکردنی خۆکار", "Offline-first with automatic sync"),
-            ("پانێڵی بەڕێوەبردن لە وێب", "Web management panel"),
-            ("سێ زمان و مێنیوی فرە زمان", "Three languages, multilingual menu"),
-        ],
-        tech=["FLUTTER", "BLUETOOTH PRINT", "OFFLINE-FIRST"],
-        shots=["kapitan.webp", "kapitan-1.webp", "kapitan-2.webp", "kapitan-3.webp"],
-        pdfs=[("kisra-kapitan-sheet.pdf", "پەڕەی بەرهەم (١ لاپەڕە)", "Product sheet (1 page)"),
-              ("marketing/kapitanpos-marketing.pdf", "کاتالۆگی تەواو (١٦ لاپەڕە)", "Full marketing PDF (16 pages)")],
-        faq=[("پێویستی بە کۆمپیوتەر هەیە؟", "Do I need a computer?",
-              "نەخێر — تەنها تابلێت و چاپەرێکی بلوتووث.",
-              "No — just a tablet and a Bluetooth printer."),
-             ("ئینتەرنێت پێویستە؟", "Is internet required?",
-              "نەخێر. سیستەم ئۆفلاین کار دەکات و کاتێک ئینتەرنێت هەبوو خۆی هاوکات دەکات.",
-              "No. It works offline and syncs automatically when internet returns.")],
-    ),
-    dict(
-        key="custom",
-        ku="پرۆژەی تایبەت", en="Custom ERP",
-        kind_ku="سیستەمی تایبەت بۆ کارەکەت", kind_en="Bespoke business system",
-        tag_ku="سیستەمێک کە بە تەواوی بۆ کاری خۆت دروست کراوە.",
-        tag_en="A system built around your workflow, end to end.",
-        price="$1200+", price_ku="دۆلار و زیاتر", price_en="from",
-        overview_ku="ئەگەر سیستەمی ئامادە بۆ کارەکەت گونجاو نەبوو، پرۆژەی تایبەت دروست دەکەین: پلان، دیزاین، گەشەپێدان، بڵاوکردنەوە و راهێنان — هەمووی بەپێی مەودای کارێکی نووسراو.",
-        overview_en="When a ready-made system does not fit, we build the custom one: planning, design, development, deployment and training — all against a written scope.",
-        features=[
-            ("پلان و دیزاین بەپێی کاری ڕاستەقینەی تۆ", "Planning and design around your real workflow"),
-            ("وێب ، مۆبایل یان هەردووکیان", "Web, mobile, or both"),
-            ("کوردی و عەرەبی و ئینگلیزی لەگەڵ ڕاست بۆ چەپ", "Kurdish, Arabic and English with RTL"),
-            ("پەیوەندی بە سیستەم و خزمەتگوزارییەکانی تر", "Integrations with your other systems"),
-            ("بڵاوکردنەوە و راهێنانی کارمەندان", "Deployment and staff training"),
-            ("پاڵپشتی و گەشەپێدانی دواتر", "Support and further development"),
-        ],
-        tech=["YOUR STACK", "API", "RTL"],
-        shots=["custom.webp", "gihan.webp", "zuba.webp"],
-        pdfs=[("kisra-custom-sheet.pdf", "پەڕەی بەرهەم (١ لاپەڕە)", "Product sheet (1 page)")],
-        faq=[("نرخ چۆن دیاری دەکرێت؟", "How is the price set?",
-              "بەپێی مەودای کار. پێشەکی ٥٠ لە سەد لە کاتی ڕێککەوتن.",
-              "By scope. 50% deposit at signing, 40% at delivery, 10% at acceptance."),
-             ("چەند دەخایەنێت؟", "How long does it take?",
-              "لە چەند هەفتەیەکەوە بۆ چەند مانگێک، بەپێی قەبارە. بەروار لە پێشنیارەکەدا دیاری دەکرێت.",
-              "Weeks to months depending on size — the timeline is fixed in the proposal.")],
-    ),
-    dict(
-        key="website",
-        ku="ماڵپەڕی بازرگانی", en="Business website",
-        kind_ku="ماڵپەڕی کۆمپانیا و بەرهەم", kind_en="Company website",
-        tag_ku="ماڵپەڕی خێرا و جوان بە کوردی و عەرەبی و ئینگلیزی ، ئامادە بۆ گەڕان لە گووگڵ.",
-        tag_en="A fast, multilingual company site that is ready for Google.",
-        price="$300", price_ku="دۆلار", price_en="one-time",
-        overview_ku="ماڵپەڕی فەرمی بۆ بازرگانییەکەت: دیزاین بەپێی ناوی بازرگانی، فرە زمان، خێرا و ئامادە بۆ مۆبایل — لەگەڵ فۆرمی پەیوەندی و واتساپ.",
-        overview_en="An official site for your business: designed around your brand, multilingual, fast and mobile-ready — with a contact form and WhatsApp.",
-        features=[
-            ("دیزاین بەپێی ناوی بازرگانییەکەت", "Design built around your brand"),
-            ("کوردی و عەرەبی و ئینگلیزی لەگەڵ ڕاست بۆ چەپ", "Kurdish, Arabic and English with RTL"),
-            ("خێرا و ئامادە بۆ مۆبایل", "Fast and mobile-ready"),
-            ("فۆرمی پەیوەندی و واتساپ", "Contact form and WhatsApp"),
-            ("ئامادە بۆ گووگڵ (SEO)", "Search-engine ready (SEO)"),
-            ("دۆمەین و هۆستینگ بەردەستە", "Domain and hosting available"),
-        ],
-        tech=["HTML", "RTL", "SEO"],
-        shots=["website-shaz.webp"],
-        pdfs=[("kisra-website-sheet.pdf", "پەڕەی بەرهەم (١ لاپەڕە)", "Product sheet (1 page)")],
-        faq=[("دۆمەین و هۆستینگ لەخۆ دەگرێت؟", "Is domain and hosting included?",
-              "نەخێر، بەڵام ڕێکدەخەین و ساڵانە بە نرخی کڕینەکەی دەبێت.",
-              "Not included, but we set it up and it stays at cost."),
-             ("دەتوانم خۆم نوێی بکەمەوە؟", "Can I update it myself?",
-              "بەڵێ — لاپەڕەکان ساکارن و راهێنان دەدرێت.",
-              "Yes — pages are simple and we train you on updates.")],
-    ),
-    dict(
-        key="ecommerce",
-        ku="بازاڕگەی ئەلیکترۆنی", en="Online marketplace",
-        kind_ku="فرۆشتنی ئۆنلاین", kind_en="E-commerce platform",
-        tag_ku="بازاڕگەیەکی تەواو بۆ فرۆشتنی ئۆنلاین ، لەگەڵ بەڕێوەبردنی کاڵا و داواکاری و پارەدان.",
-        tag_en="A complete online store with products, orders and payments.",
-        price="$4000", price_ku="دۆلار", price_en="one-time",
-        overview_ku="بازاڕگەی ئەلیکترۆنی بە تەواوی: کاڵا و وێنە و نرخ، داواکاری و بەدواداچوونی ناردن، هەژماری کڕیار و ڕاپۆرتی فرۆشتن — بە کوردی و عەرەبی و ئینگلیزی.",
-        overview_en="A full online store: products, photos and prices, orders and delivery tracking, customer accounts and sales reports — in Kurdish, Arabic and English.",
-        features=[
-            ("کاڵا ، وێنە و نرخ لە پانێڵێکدا", "Products, photos and prices in one panel"),
-            ("داواکاری و بەدواداچوونی ناردن", "Orders and delivery tracking"),
-            ("هەژماری کڕیار و مێژووی کڕین", "Customer accounts and purchase history"),
-            ("ڕاپۆرتی فرۆشتن و قازانج", "Sales and profit reports"),
-            ("فرە زمان و ڕاست بۆ چەپ", "Multilingual and RTL"),
-            ("ئامادە بۆ پارەدان و گەیاندن", "Ready for payments and delivery"),
-        ],
-        tech=["NEXT.JS", "SUPABASE", "RTL"],
-        shots=["ecommerce-jumla.webp"],
-        pdfs=[("kisra-ecommerce-sheet.pdf", "پەڕەی بەرهەم (١ لاپەڕە)", "Product sheet (1 page)")],
-        faq=[("چەند کاڵا دەتوانم دابنێم؟", "How many products can I add?",
-              "بێ سنوور. پانێڵ بۆ چەند هەزار کاڵا ئامادەیە.",
-              "Unlimited — the panel handles thousands of products."),
-             ("پارەدان چۆنە؟", "How do payments work?",
-              "بەپێی پێویست: پارەدان لە کاتی گەیاندن، زەین کاش، یان دەروازەی پارەدانی ئۆنلاین.",
-              "Whatever fits: cash on delivery, ZainCash, or an online payment gateway.")],
-    ),
-    dict(
-        key="exam",
-        ku="سیستەمی تاقیکردنەوە", en="Exam system",
-        kind_ku="تاقیکردنەوەی خوێندکاران", kind_en="Exams for institutes",
-        tag_ku="سیستەمێکی تاقیکردنەوەی ئۆنلاین کە پێویستی بە ئینتەرنێت نییە لە کاتی تاقیکردنەوەدا.",
-        tag_en="Online exams that need no internet during the test.",
-        price="$1500–2000", price_ku="دۆلار · ساڵانە ٣٠٠ دۆلار", price_en="+ $300/yr",
-        overview_ku="سیستەمی تاقیکردنەوەی پەیمانگا و زانکۆ: لیژنەی کاغەزەکە خۆکار ئامادە دەکات، خوێندکاران لە وێبگەڕ تاقیکردنەوە دەکەن، و هەموو وەڵامەکان یەکجا هەڵدەسەنگێنرێن. لە ماوەی تاقیکردنەوەدا پێویستی بە ئینتەرنێت نییە.",
-        overview_en="An exam system for institutes and universities: papers are generated automatically, students take the test in a browser, and every answer is graded in one pass. No internet is needed during the exam.",
-        features=[
-            ("لیژنەی کاغەزەکە خۆکار ئامادە دەکات", "Papers generated automatically"),
-            ("خوێندکاران لە وێبگەڕ تاقیکردنەوە دەکەن", "Students take exams in the browser"),
-            ("هەموو وەڵامەکان یەکجا هەڵدەسەنگێنرێن", "All answers graded in one pass"),
-            ("ئەنجام و ڕاپۆرت بۆ مامۆستا", "Results and reports for teachers"),
-            ("چاودێری و کۆنترۆڵی کاتی", "Live monitoring and timing"),
-            ("لەسەر سێرڤەرێکی خۆماڵی کار دەکات", "Runs on a local server"),
-        ],
-        tech=["FLASK", "SQLITE", "FLUTTER"],
-        shots=["exam-puplis.webp"],
-        pdfs=[("kisra-exam-sheet.pdf", "پەڕەی بەرهەم (١ لاپەڕە)", "Product sheet (1 page)"),
-              ("marketing/puplis-marketing-ku.pdf", "کاتالۆگی تەواو — کوردی (٩ لاپەڕە)", "Full marketing PDF — Kurdish (9 pages)"),
-              ("marketing/puplis-marketing-ar.pdf", "کاتالۆگی تەواو — عەرەبی", "Full marketing PDF — Arabic"),
-              ("marketing/puplis-marketing-en.pdf", "کاتالۆگی تەواو — ئینگلیزی", "Full marketing PDF — English")],
-        faq=[("بۆ چەند خوێندکار گونجاوە؟", "How many students does it handle?",
-              "٥٠ خوێندکار لە یەک کاتدا دەست پێدەکەن؛ بۆ زانکۆکان بەپێی قەبارە ڕێکدەخرێت.",
-              "50 students start at once; large universities are sized to fit."),
-             ("ئینتەرنێت پێویستە؟", "Is internet required?",
-              "لە کاتی تاقیکردنەوەدا نەخێر — لەسەر سێرڤەری خۆماڵی کار دەکات.",
-              "Not during the exam — it runs on a local server.")],
-    ),
-    dict(
-        key="app",
-        ku="ئەپی تایبەت", en="Custom app",
-        kind_ku="پلاتفۆرمی تایبەت", kind_en="Custom platform",
-        tag_ku="ئەپی تایبەت بۆ دەلیڤەری ، تاکسی یان هەر بیرۆکەیەکی نوێ — لە پلانەوە بۆ بڵاوکردنەوە.",
-        tag_en="Your own platform for delivery, taxi or a new idea — from plan to launch.",
-        price="$5000+", price_ku="دۆلار و زیاتر", price_en="from",
-        overview_ku="پلاتفۆرمی تەواو: ئەپی کڕیار، ئەپی کارمەند و پانێڵی بەڕێوەبردن — لەگەڵ شوێن، داواکاری بە کاتی ڕاستەقینە، پارەدان و هەژمار. وەک پۆشیا.",
-        overview_en="A complete platform: customer app, staff app and admin panel — with location, real-time orders, payments and accounts. Like Poshya.",
-        features=[
-            ("ئەپی کڕیار و ئەپی کارمەند", "Customer app and staff app"),
-            ("شوێن و داواکاری بە کاتی ڕاستەقینە", "Location and real-time orders"),
-            ("پارەدان و هەژمار", "Payments and accounts"),
-            ("پانێڵی بەڕێوەبردن لە وێب", "Web admin panel"),
-            ("فرە زمان و ڕاست بۆ چەپ", "Multilingual and RTL"),
-            ("بڵاوکردنەوە لە ئەپ ستۆر و گووگڵ پلەی", "App Store and Google Play publishing"),
-        ],
-        tech=["EXPO", "NEXT.JS", "SUPABASE"],
-        shots=["app-poshya.webp"],
-        pdfs=[("kisra-app-sheet.pdf", "پەڕەی بەرهەم (١ لاپەڕە)", "Product sheet (1 page)")],
-        faq=[("چەند دەخایەنێت؟", "How long does it take?",
-              "دوو بۆ چوار مانگ بەپێی قەبارە. پێشەکی ٥٠ لە سەد.",
-              "Two to four months depending on scope. 50% deposit."),
-             ("خاوەندارێتی کام لایەنە؟", "Who owns the code?",
-              "دوای پارەدانی کۆتایی، کۆدی تایبەت بۆ پرۆژەکە هی تۆیە.",
-              "After the final payment, the code written for your project is yours.")],
-    ),
-]
+MKT_DIR = os.path.join(ROOT, "assets", "pdf", "marketing")
+MKT_PREFIX = {"kapitan": "kapitanpos", "exam": "puplis"}
 
-# ---------------------------------------------------------------- template
+EXTRA = {
+    "gihan": dict(
+        why=[
+            ("دەرفەتی فرۆشتن لەدەست ناچێت", "No sale gets lost",
+             "هەر داواکارییەک لە هەر کەناڵێکەوە بێت لە یەک شوێن تۆمار دەکرێت.",
+             "Every order from any channel lands in one place."),
+            ("قازانجی ڕاستەقینە دەبینیت", "You see real profit",
+             "نرخی فرۆشتن کەم کراوە لە تێچووی کاڵا، کۆمیشن و داشکاندن.",
+             "Sale price minus cost, commission and discount per order."),
+            ("کۆگا هەرگیز لەدەست ناچێت", "Stock never drifts",
+             "لیستری جووڵەی کاڵا بۆ هەموو فرۆشتن و کڕین و گەڕاندنەوە.",
+             "A movement ledger covering every sale, purchase and return."),
+        ],
+        how=[
+            ("کاڵا و کۆگا دابنێ", "Add products and stock",
+             "کاڵا، بارکۆد، نرخ و کۆگا هاوردە دەکرێت — یان لە Excel.",
+             "Import from Excel, or type them in."),
+            ("کاشێر و کارمەندان ڕێک بخە", "Set up cashier and staff",
+             "ڕۆڵ و دەسەڵات بۆ هەر کارمەندێک، سندوق و شیفت.",
+             "Roles, permissions, cash drawer and shifts."),
+            ("بفرۆشە و ببینە", "Sell and see",
+             "فرۆشتن لە چەند ئامێر و لقێک، ڕاپۆرتی ڕۆژانە و قازانج.",
+             "Sell from several devices and branches; daily reports and profit."),
+        ],
+        stats=[("٤", "کەناڵی فرۆشتن", "sales channels"),
+               ("٤", "زمان لەگەڵ RTL", "languages with RTL"),
+               ("∞", "بەکارهێنەر بەپێی پاکێج", "users by package")],
+        packages=[
+            ("سەرەتا", "Starter", "٧٥٠,٠٠٠ دینار", "750,000 IQD", "١ فرۆشگا ، ٣ بەکارهێنەر", "1 shop, 3 users"),
+            ("پیشەگەر", "Pro", "١,٥٠٠,٠٠٠ دینار", "1,500,000 IQD", "چەند فرۆشگا/لق ، ١٠ بەکارهێنەر", "multi-shop, 10 users"),
+            ("کۆمپانیا", "Company", "پەیوەندی بکە", "contact us", "بێ سنوور ، دابەشکردن", "unlimited, distribution"),
+        ],
+    ),
+    "zuba": dict(
+        why=[
+            ("قەرز و پارە لە یەک شوێن", "Debt and money in one place",
+             "دەفتەری قەرزی کڕیار و دابینکەر بە حیسابی خۆکار.",
+             "Customer and supplier ledgers calculated automatically."),
+            ("کۆگای فرە شوێن", "Multi-location stock",
+             "کاڵا لە چەند کۆگا و لقێک، بە مێژووی جووڵە.",
+             "Stock across warehouses and locations with movement history."),
+            ("ڕاپۆرتی بەشداران", "Partner reports",
+             "قازانجی گشتی و بەشی هەر بەشدارێک بە ڕوونی.",
+             "Overall profit and each partner's share, clearly."),
+        ],
+        how=[
+            ("داتای کۆن بگوازەرەوە", "Migrate your data",
+             "کاڵا، کڕیار، قەرز و دابینکەران دەگوازرێنەوە.",
+             "Products, customers, debt and suppliers are imported."),
+            ("کۆگا و لقەکان ڕێک بخە", "Set up stock and locations",
+             "کۆگا، لیستری کاڵا و ئاگادارکردنەوەی کەمبوون.",
+             "Warehouses, ledgers and low-stock alerts."),
+            ("فرۆشتن و کڕین دەست پێبکە", "Start selling and buying",
+             "پسوولە، پێشکەشکردن، گەڕاندنەوە و پارەدان.",
+             "Invoices, quotations, returns and payments."),
+        ],
+        stats=[("١٢", "تایبەتمەندی سەرەکی", "core features"),
+               ("٣", "زمان لەگەڵ RTL", "languages with RTL"),
+               ("∞", "لق و کۆگا", "branches and warehouses")],
+        packages=[
+            ("سەرەتا", "Starter", "٨٠٠ دۆلار+", "$800+", "١ کۆگا ، ٣ بەکارهێنەر", "1 warehouse, 3 users"),
+            ("پیشەگەر", "Pro", "١,٥٠٠ دۆلار+", "$1,500+", "چەند کۆگا/لق ، ١٠ بەکارهێنەر", "multi-warehouse, 10 users"),
+            ("کۆمپانیا", "Company", "پەیوەندی بکە", "contact us", "بێ سنوور ، فرە کۆمپانیا", "unlimited, multi-company"),
+        ],
+    ),
+    "kapitan": dict(
+        why=[
+            ("کافێ بەبێ ئینتەرنێت ناوەستێت", "The cafe keeps running",
+             "هەموو شتێک لەسەر ئامێرەکانی خۆت ڕوودەدات؛ ئینتەرنێت تەنها پاڵپشتییە.",
+             "Everything happens on your devices; the internet is only a backup."),
+            ("چێشتخانە و کاش دەنگ دەدەن بە یەک", "Kitchen and till talk",
+             "گارسۆن لە مێزەوە دەنێرێت؛ چێشتخانە دەستبەجێ دەبینێت.",
+             "The waiter sends from the table; the kitchen sees it at once."),
+            ("هیچ کۆمپیوتەرێکی نوێ پێویست نییە", "No new computer needed",
+             "تابلێت و پرینتەرێکی بلوتووث بەسە.", "A tablet and a Bluetooth printer are enough."),
+        ],
+        how=[
+            ("تابلێتەکان ڕێک بخە", "Set up the tablets",
+             "چێشتخانە میوانداری دەکات؛ گارسۆن بە QR پەیوەست دەبێت.",
+             "The kitchen hosts; the waiter joins with a QR code."),
+            ("مێنیو و مێز دابنێ", "Add menu and tables",
+             "مێنیو بە دوو ناو (کوردی/ئینگلیزی) و مێزەکان.",
+             "Menu with two names (Kurdish/English) and your tables."),
+            ("بفرۆشە و چاپ بکە", "Sell and print",
+             "پسوولە بە بلوتووث چاپ دەبێت؛ تیکتی چێشتخانە بێ نرخ.",
+             "Receipts print over Bluetooth; kitchen tickets carry no prices."),
+        ],
+        stats=[("٣", "ئامێر بەیەکەوە", "devices linked"),
+               ("٠", "ئینتەرنێت پێویست", "internet required"),
+               ("<١s", "هاوکاتکردن", "sync time")],
+        packages=[
+            ("کافێ", "Cafe", "٥٠٠,٠٠٠ دینار", "500,000 IQD", "تا ٣ ئامێر + پرینتەر ، ساڵانە ١٥٠,٠٠٠", "up to 3 devices + printer, 150,000/yr"),
+            ("ئامێری زیادە", "Extra device", "١٠٠,٠٠٠ دینار", "100,000 IQD", "هەر ئامێرێکی تر", "each additional device"),
+            ("چەند لق / تایبەت", "Multi-branch / custom", "پەیوەندی بکە", "contact us", "بەپێی پێویست", "tailored"),
+        ],
+    ),
+    "custom": dict(
+        why=[
+            ("بۆ کاری تۆ دروست کراوە", "Built for your workflow",
+             "هیچ تایبەتمەندییەکی زیادە و هیچ کەموکوڕییەک لە کارەکەتدا.",
+             "No extra features, no gaps in your process."),
+            ("مەودای کارێکی نووسراو", "A written scope",
+             "پێش دەستپێکردن هەموو شتێک بە نووسراو دیاری دەکرێت.",
+             "Everything is fixed in writing before we start."),
+            ("کۆدەکە هی تۆیە", "The code is yours",
+             "دوای پارەدانی کۆتایی، کۆدی تایبەت بۆ پرۆژەکەت هی تۆیە.",
+             "After final payment, the code we wrote is yours."),
+        ],
+        how=[
+            ("چاوپێکەوتن و شیکردنەوە", "Discovery",
+             "کارەکەت دەبینین و پێویستییەکان دەنووسین.",
+             "We study your workflow and write the requirements."),
+            ("پێشنیار و پێشەکی", "Proposal and deposit",
+             "نرخ، بەروار و مەودای کار؛ پێشەکی ٥٠ لە سەد.",
+             "Price, timeline and scope; 50% deposit."),
+            ("گەشەپێدان و ڕادەستکردن", "Build and deliver",
+             "دیزاین، کۆد، تاقیکردنەوە، ڕاهێنان و پاڵپشتی.",
+             "Design, code, testing, training and support."),
+        ],
+        stats=[("٥٠٪", "پێشەکی", "deposit"),
+               ("١٠٠٪", "کۆدی تایبەت", "custom code"),
+               ("٣٠", "ڕۆژ گەرەنتی", "day warranty")],
+        packages=[("پرۆژەی بچووک", "Small build", "١,٢٠٠ دۆلار+", "$1,200+", "١–٣ هەفتە", "1–3 weeks"),
+                  ("پرۆژەی مامناوەند", "Medium build", "٣,٠٠٠ دۆلار+", "$3,000+", "٤–٨ هەفتە", "4–8 weeks"),
+                  ("پلاتفۆرم", "Platform", "٥,٠٠٠ دۆلار+", "$5,000+", "٢–٤ مانگ", "2–4 months")],
+    ),
+    "website": dict(
+        why=[
+            ("لە گووگڵ دەبینرێت", "Found on Google", "ناونیشان، سەردێڕ و خێرایی دروست.", "Titles, descriptions and speed done properly."),
+            ("بە زمانی کڕیارەکەت", "In your customer's language", "کوردی، عەرەبی و ئینگلیزی.", "Kurdish, Arabic and English."),
+            ("لە مۆبایلدا جوانە", "Looks right on mobile", "زیاتر لە ٨٠٪ کڕیار بە مۆبایل دێت.", "Most visitors arrive on a phone."),
+        ],
+        how=[
+            ("زانیاری و وێنە", "Content", "ناو، وێنە و زانیاری بازرگانییەکەت.", "Logo, photos and business details."),
+            ("دیزاین و دروستکردن", "Design and build", "دیزاین بەپێی براندەکەت و RTL دروست.", "Design around your brand, RTL done right."),
+            ("بڵاوکردنەوە", "Launch", "دۆمەین، هۆستینگ و گووگڵ.", "Domain, hosting and search setup."),
+        ],
+        stats=[("٣", "زمان", "languages"), ("$300", "سەرەتا", "starting price"), ("SEO", "ئامادە", "ready")],
+        packages=[("یەک لاپەڕە", "One-page", "٣٠٠ دۆلار", "$300", "یەک لاپەڕە + فۆرم", "one page + form"),
+                  ("چەند لاپەڕە", "Multi-page", "٦٠٠ دۆلار", "$600", "تا ٦ لاپەڕە", "up to 6 pages"),
+                  ("فرە زمان", "Multilingual", "١,٠٠٠ دۆلار", "$1,000", "٣ زمان + SEO", "3 languages + SEO")],
+    ),
+    "ecommerce": dict(
+        why=[
+            ("فرۆشتن بەبێ دوکان", "Sell without a shop", "کاڵاکانت ٢٤ کاتژمێر بەردەستن.", "Your products are available 24/7."),
+            ("داواکاری بە ڕێک", "Orders in order", "هەر داواکارییەک دۆخ و بەدواداچوونی هەیە.", "Every order has a status and tracking."),
+            ("ڕاپۆرتی فرۆشتن", "Sales reports", "دەزانیت چ کاڵایەک دەفرۆشرێت.", "Know which products actually sell."),
+        ],
+        how=[
+            ("کاڵا و وێنە", "Products and photos", "کاڵا، نرخ و وێنە لە پانێڵ.", "Products, prices and photos in the panel."),
+            ("پارەدان و گەیاندن", "Payments and delivery", "زەین کاش، پارە لە کاتی گەیاندن.", "ZainCash or cash on delivery."),
+            ("بڵاوکردنەوە", "Launch", "دۆمەین، هۆستینگ و ئامادەکردن.", "Domain, hosting and go-live."),
+        ],
+        stats=[("∞", "کاڵا", "products"), ("٣", "زمان", "languages"), ("$4000", "تەواو", "full build")],
+        packages=[("بازاڕگە", "Marketplace", "٤,٠٠٠ دۆلار", "$4,000", "کاڵا بێ سنوور", "unlimited products"),
+                  ("بازاڕگە + ئەپ", "Marketplace + app", "٧,٠٠٠ دۆلار", "$7,000", "ئەپ بۆ کڕیار", "customer app"),
+                  ("تایبەت", "Custom", "پەیوەندی بکە", "contact us", "بەپێی پێویست", "tailored")],
+    ),
+    "exam": dict(
+        why=[
+            ("لیژنە بە دەست", "Papers by hand", "هەر هەفتەیەک لیژنەی کاغەزەکە دەنووسرێتەوە — ئەمە ئەو کارە دەکات.", "Weekly paper assembly is done by the system."),
+            ("بێ ئینتەرنێت لە کاتی تاقیکردنەوە", "No internet during the exam", "لەسەر سێرڤەرێکی ناوخۆیی کار دەکات؛ هیچ وەڵامێک لەدەست ناچێت.", "Runs on a local server; no answer is lost."),
+            ("نمرەدان بە یەکجا", "One-pass grading", "هەموو وەڵامەکان یەکجا هەڵدەسەنگێنرێن و ڕاپۆرت دروست دەبێت.", "Every answer is graded together and reports are generated."),
+        ],
+        how=[
+            ("تاقیکردنەوە دروست بکە", "Build the exam", "پرسیارەکان بە CSV/JSON هاوردە دەکرێن یان دەنووسرێن.", "Import questions from CSV/JSON or write them."),
+            ("بڵاوی بکەوە", "Publish", "کۆدێک بۆ خوێندکاران؛ شاشەی تاقیکردنەوە و کاتژمێر.", "An access code for students; exam screen and timer."),
+            ("ئەنجام ببینە", "See results", "نمرە، فلتەر، CSV و چاپ.", "Marks, filters, CSV and printing."),
+        ],
+        stats=[("٥٧", "تاقیکردنەوە لە ساڵێک", "exams in a year"),
+               ("٥٧٠٠+", "ئەنجامی تۆمارکراو", "results recorded"),
+               ("٥٠", "خوێندکار بەیەکەوە", "students at once")],
+        packages=[("پەیمانگا", "Institute", "١,٠٠٠,٠٠٠ دینار", "1,000,000 IQD", "تا ٣٠٠ خوێندکار ، ساڵانە ٣٠٠,٠٠٠", "up to 300 students, 300,000/yr"),
+                  ("زانکۆ", "University", "٢,٠٠٠,٠٠٠ دینار", "2,000,000 IQD", "تا ١,٥٠٠ خوێندکار ، ساڵانە ٥٠٠,٠٠٠", "up to 1,500 students, 500,000/yr"),
+                  ("تایبەت", "Custom", "پەیوەندی بکە", "contact us", "بێ سنوور / چەند کەمپەس", "unlimited / multi-campus")],
+    ),
+    "app": dict(
+        why=[
+            ("ئەپ و پانێڵ بەیەکەوە", "App and panel together", "کڕیار، کارمەند و بەڕێوەبەر لە یەک سیستەم.", "Customer, staff and admin in one system."),
+            ("داواکاری بە کاتی ڕاستەقینە", "Real-time orders", "شوێن، دۆخ و ئاگادارکردنەوە.", "Location, status and notifications."),
+            ("بۆ بازاڕی کوردستان", "Made for this market", "کوردی، عەرەبی، ئینگلیزی و RTL.", "Kurdish, Arabic, English and RTL."),
+        ],
+        how=[
+            ("بیرۆکە و پلان", "Idea and plan", "مەودای کار، شاشەکان و مۆدێل.", "Scope, screens and data model."),
+            ("ئەپ و پانێڵ", "App and panel", "ئەپی کڕیار/کارمەند + پانێڵی وێب.", "Customer/staff apps + web panel."),
+            ("بڵاوکردنەوە", "Launch", "ئەپ ستۆر، گووگڵ پلەی و راهێنان.", "App Store, Google Play and training."),
+        ],
+        stats=[("٢", "ئەپ", "apps"), ("$5000+", "سەرەتا", "from"), ("٢–٤", "مانگ", "months")],
+        packages=[("MVP", "MVP", "٥,٠٠٠ دۆلار+", "$5,000+", "ئەپ + پانێڵ", "app + panel"),
+                  ("پلاتفۆرم", "Platform", "١٠,٠٠٠ دۆلار+", "$10,000+", "فرە ڕۆڵ و پارەدان", "multi-role + payments"),
+                  ("تایبەت", "Custom", "پەیوەندی بکە", "contact us", "بەپێی پێویست", "tailored")],
+    ),
+}
+
+
+ENRICH = {
+    "gihan": dict(
+        features=[
+            ("کاشێری خێرا + چاپ/واتسئاپی پسووڵە", "Fast cashier + print/WhatsApp receipt"),
+            ("کۆدی کڕیار و گروپی داشکاندن", "Customer codes and discount groups"),
+            ("چوار کەناڵی فرۆشتن لە یەک شوێن", "Four sales channels in one place"),
+            ("قازانجی هەر داواکارییەک", "Profit on every order"),
+            ("کۆگا بە لیستری جووڵە", "Stock with a movement ledger"),
+            ("چەند فرۆشگا/لق لە یەک سیستەم", "Multi-store / multi-branch in one system"),
+            ("ڕۆڵ و دەسەڵات بۆ کاشێر و بەڕێوەبەر", "Roles and permissions for cashier and manager"),
+            ("کۆنتەرۆلی سندوق و ڕاپۆرتی ڕۆژانە", "Cash drawer control and daily reports"),
+            ("کۆمیشنی ئەپی گەیاندن وەک خەرجی", "Delivery commission recorded as an expense"),
+            ("PWA — کارکردن لە وێبگەڕ بێ دامەزراندن", "PWA — runs in the browser, no install"),
+        ],
+        faq=[
+            ("بە چ زمانێکە؟", "Which languages?", "کوردی، عەرەبی، فارسی و ئینگلیزی، RTL تەواو.", "Kurdish, Arabic, Persian and English, full RTL."),
+            ("داتای کۆنم دەگوازرێتەوە؟", "Can my old data move?", "بەڵێ، کاڵا/کڕیار/قەرز لە Excel.", "Yes — products, customers and debt from Excel."),
+            ("لە کوێ کار دەکات؟", "Where does it run?", "سێرڤەری خۆت یان هەور؛ لە وێبگەڕ لەسەر PC، تابلێت و مۆبایل.", "Your server or the cloud; in a browser on PC, tablet and phone."),
+            ("ئەپ هەیە؟", "Is there a mobile app?", "نا، بەڵام PWA وەک ئەپ لەسەر مۆبایل دادەبەزێت.", "No, but the PWA installs like an app."),
+            ("پشتگیری؟", "Support?", "٣ مانگ لەخۆدەگرێت.", "3 months included."),
+            ("نرخ؟", "Price?", "بەپێی پاکێج؛ بۆ نرخی تایبەت پەیوەندی بکە.", "By package; ask for a custom quote."),
+        ],
+    ),
+    "zuba": dict(
+        features=[
+            ("فرۆشتن و چاپکردنی پسووڵە", "Sales and printable invoices"),
+            ("پێشکەشکردن / پێشنووس", "Quotations and offers"),
+            ("گەڕاندنەوەی کاڵا و داشکاندن", "Returns and discounts"),
+            ("بەڕێوەبردنی کۆگا و بارکۆد", "Inventory and barcode management"),
+            ("ئاگادارکردنەوەی کەمبوونی کۆگا", "Low-stock alerts"),
+            ("دەفتەری قەرزی کڕیاران", "Customer debt ledger"),
+            ("کڕین لە دابینکەران و داواکاری کڕین", "Supplier purchasing and purchase orders"),
+            ("پارە، خەرجی و سەندوق", "Cash, expenses and cashbox"),
+            ("ڕاپۆرت و قازانجی خاوێن", "Reports and net profit"),
+            ("بەکارهێنەر، ڕۆڵ و دەسەڵات", "Users, roles and permissions"),
+            ("سێ زمان + ڕاستبۆچەپ (RTL)", "Three languages with full RTL"),
+            ("گەڕانی خێرا بە بارکۆد و مۆبایل", "Fast search by barcode and phone"),
+        ],
+        faq=[
+            ("لە کوێ کار دەکات؟", "Where does it run?", "لەسەر سێرڤەری خۆت یان هەور؛ بە وێبگەڕ.", "On your server or the cloud, through a browser."),
+            ("داتای کۆن دەگوازرێتەوە؟", "Is migration possible?", "بەڵێ، کاڵا، کڕیار، قەرز و دابینکەران.", "Yes — products, customers, debt and suppliers."),
+            ("چەند بەکارهێنەر؟", "How many users?", "بەپێی پاکێج، لە ٣ بۆ بێ سنوور.", "By package, from 3 to unlimited."),
+            ("پشتگیری و راهێنان؟", "Support and training?", "راهێنانی کارمەندان لە کاتی دامەزراندن و ٣ مانگ پشتگیری.", "Staff training at setup and 3 months of support."),
+        ],
+    ),
+    "kapitan": dict(
+        features=[
+            ("وەیتەر: مێز، دانیشتن و داواکاری بە خول", "Waiter: tables, seating and order rounds"),
+            ("شاشەی چێشتخانە (نوێ ← ئامادەکردن ← ئامادە)", "Kitchen display (new → preparing → ready)"),
+            ("کاشێر، پارەدان و لیستی پاککردنەوە", "Cashier, payment and cleaning list"),
+            ("تێل بۆ دوکانی بچووک", "Till mode for small shops"),
+            ("کارکردن بەبێ ئینتەرنێت و بێ سێرڤەر", "Works with no internet and no server"),
+            ("هاوتاکردنی خۆکاری ئامێرەکان لەسەر WiFi", "Automatic device sync over WiFi"),
+            ("چاپکردنی خۆکاری پسووڵە بە Bluetooth", "Automatic Bluetooth receipt printing"),
+            ("تیکتی چێشتخانە بێ نرخ", "Kitchen ticket without prices"),
+            ("مێنیو بە دوو ناو (کوردی/ئینگلیزی)", "Menu with two names (Kurdish/English)"),
+            ("داتا لەسەر ئامێر — بێ کرێی مانگانە", "On-device data — no monthly bill"),
+        ],
+        faq=[
+            ("ئینتەرنێت پێویستە؟", "Is internet required?", "نا؛ تەنها WiFi ی دوکان یان هۆتسپۆتی مۆبایل.", "No — only local WiFi or a phone hotspot."),
+            ("چەند ئامێر؟", "How many devices?", "٢–٣ (وەیتەر، چێشتخانە، کاشێر)، هەر ئامێرێک ڕۆڵێکی هەیە.", "2–3 (waiter, kitchen, cashier), each with its own role."),
+            ("چ پرینتەرێک؟", "Which printer?", "٨٠ ملم گەرمی بە Bluetooth (ESC/POS).", "80 mm thermal over Bluetooth (ESC/POS)."),
+            ("پسووڵە بە کوردی؟", "Kurdish receipts?", "نا؛ پرینتەرەکانی گەرمی کوردی پشتگیری ناکەن. ناوی کاڵا لە ئەپدا کوردی دەردەکەوێت.", "No — thermal printers don't render Kurdish; product names show in Kurdish in the app."),
+            ("ئایفۆن؟", "iPhone?", "نا، تەنها ئەندرۆید.", "No — Android only."),
+            ("نرخ؟", "Price?", "بەپێی پاکێج.", "By package."),
+        ],
+    ),
+    "exam": dict(
+        features=[
+            ("دروستکردن و بڵاوکردنەوەی تاقیکردنەوە بە کۆد", "Build and publish exams with an access code"),
+            ("شەش جۆری پرسیار", "Six question types"),
+            ("هاوردەکردنی CSV/JSON بە ڕاپۆرتی پێشوەخت", "CSV/JSON import with a dry-run report"),
+            ("شاشەی خوێندکار: یەک پرسیار، پالێت، کاتژمێر", "Student screen: one question, palette, timer"),
+            ("دانیشتنی ئۆفلاین بە ناردنی خۆکار", "Offline sitting with queued submit"),
+            ("ئەنجام، فلتەر، CSV و چاپ", "Results, filters, CSV and printing"),
+            ("چاودێری زیندووی دانیشتن", "Live sitting monitor"),
+            ("ئاسایش: وەڵامی ڕاست هەرگیز بۆ خوێندکار نانێردرێت", "Security: correct answers never reach the student"),
+            ("گواستنەوە لە وەشانی کۆن", "Migration from the old version"),
+        ],
+        faq=[
+            ("بێ ئینتەرنێت کار دەکات؟", "Does it work offline?", "بەڵێ، تەنها سەرەتا و ناردن تۆڕ دەوێت؛ دانیشتن ئۆفلاین بەردەوام دەبێت.", "Yes — only start and submit need network; the sitting continues offline."),
+            ("چ ئامێرێک پێویستە؟", "What hardware is needed?", "وێبگەڕ لەسەر PC یان تابلێت؛ سێرڤەرێکی ناوخۆیی.", "A browser on PC or tablet; a local server."),
+            ("وەڵامەکان پارێزراون؟", "Are answers protected?", "وەڵامی ڕاست هەرگیز بۆ خوێندکار نانێردرێت؛ نمرەدان لە سێرڤەر.", "Correct answers never go to the student; grading happens on the server."),
+            ("لە سیستەمی کۆن دەگوازرێتەوە؟", "Can you migrate our old system?", "بەڵێ، ٥٤ بنکەدراوە و ٥,٧٤٦ وەڵام تاقیکراونەتەوە (٩٨.٢٪ وەک یەک).", "Yes — 54 databases and 5,746 answers were tested (98.2% identical)."),
+            ("چەند خوێندکار بە یەکەوە؟", "How many students at once?", "لەسەر سێرڤەرێکی ئاسایی بە ئاسانی ٥٠+؛ بەپێی پاکێج.", "50+ on a normal server; by package."),
+            ("نرخ؟", "Price?", "پەیمانگا ١,٥٠٠ دۆلار، زانکۆ ٢,٠٠٠ دۆلار، ساڵانە ٣٠٠ دۆلار.", "Institute $1,500, university $2,000, $300 per year."),
+        ],
+    ),
+}
+
+for p in DATA:
+    p.update(EXTRA.get(p["key"], {}))
+    p.update(ENRICH.get(p["key"], {}))
+
+
+
+def marketing_pdfs(key):
+    prefix = MKT_PREFIX.get(key, key)
+    files = sorted(glob.glob(os.path.join(MKT_DIR, f"{prefix}*.pdf")))
+    out = []
+    for f in files:
+        name = os.path.basename(f)
+        lang = "ku"
+        for l in ("ku", "ar", "en"):
+            if f"-{l}.pdf" in name or f"_{l}." in name:
+                lang = l
+        label = {"ku": ("کوردی", "Kurdish"), "ar": ("عەرەبی", "Arabic"), "en": ("ئینگلیزی", "English")}[lang]
+        out.append((f"marketing/{name}", label[0], label[1]))
+    return out
+
+
 HEAD = """<!DOCTYPE html>
 <html lang="ckb" dir="rtl">
 <head>
@@ -292,6 +381,7 @@ BODY = """<main class="product-page">
           <div class="pp-meta">
             <div class="pp-price"><span class="mono"><span class="ku">نرخ</span><span class="en">price</span></span><b>{price}</b><small><span class="ku">{price_ku}</span><span class="en">{price_en}</span></small></div>
             <a class="btn btn-gold" href="{wa}" target="_blank" rel="noopener"><span class="ku">پەیوەندی بکە</span><span class="en">Get in touch</span></a>
+            <a class="btn btn-ghost" href="../assets/pdf/{catalog}" download><span class="ku">داگرتنی کاتالۆگی PDF</span><span class="en">Download PDF catalogue</span></a>
           </div>
         </div>
         <div class="pp-shot"><img src="../assets/shots/{hero}" alt="{en} screenshot"></div>
@@ -305,17 +395,30 @@ BODY = """<main class="product-page">
         <div class="mono kicker">OVERVIEW</div>
         <h2><span class="ku">دەربارەی {ku}</span><span class="en">About {en}</span></h2>
         <p class="pp-overview"><span class="ku">{overview_ku}</span><span class="en">{overview_en}</span></p>
-        <div class="pp-tech">
-          {tech}
-        </div>
+        <div class="pp-tech">{tech}</div>
       </div>
-      <div class="pp-features">
-        <div class="mono kicker">FEATURES</div>
-        <h2><span class="ku">چی لەخۆ دەگرێت</span><span class="en">What it includes</span></h2>
-        <ul class="check-list">
-          {features}
-        </ul>
+      <div>
+        <div class="mono kicker">WHY</div>
+        <h2><span class="ku">بۆچی {ku}؟</span><span class="en">Why {en}?</span></h2>
+        <div class="why-list">{why}</div>
       </div>
+    </div>
+  </section>
+
+  <section class="section pp-how">
+    <div class="wrap">
+      <div class="mono kicker">HOW IT WORKS</div>
+      <h2><span class="ku">چۆن کار دەکات</span><span class="en">How it works</span></h2>
+      <div class="how-grid">{how}</div>
+      <div class="stat-band">{stats}</div>
+    </div>
+  </section>
+
+  <section class="section pp-features-sec">
+    <div class="wrap">
+      <div class="mono kicker">FEATURES</div>
+      <h2><span class="ku">تایبەتمەندییەکان</span><span class="en">Features</span></h2>
+      <ul class="feature-grid">{features}</ul>
     </div>
   </section>
 
@@ -327,19 +430,27 @@ BODY = """<main class="product-page">
     </div>
   </section>
 
+  <section class="section pp-packages">
+    <div class="wrap">
+      <div class="mono kicker">PACKAGES</div>
+      <h2><span class="ku">پاکێج و نرخ</span><span class="en">Packages and pricing</span></h2>
+      <div class="pkg-grid">{packages}</div>
+    </div>
+  </section>
+
   <section class="section pp-downloads">
     <div class="wrap">
       <div class="mono kicker">DOWNLOADS</div>
-      <h2><span class="ku">داگرتن و کاتالۆگ</span><span class="en">Downloads</span></h2>
-      <p class="pp-note"><span class="ku">هەمان زانیاری بە PDF — بۆ ناردن بۆ کڕیار یان چاپکردن.</span><span class="en">The same material as PDF — to send to a client or print.</span></p>
+      <h2><span class="ku">داگرتنەکان</span><span class="en">Downloads</span></h2>
+      <p class="pp-note"><span class="ku">پەڕەی بەرهەم و کاتالۆگەکانی PDF.</span><span class="en">Product sheet and the PDF catalogues.</span></p>
       <div class="dl-grid">{pdfs}</div>
       <div class="pdf-preview">
         <div class="pdf-preview-head">
           <span class="mono">PDF PREVIEW</span>
-          <a class="product-link" href="../assets/pdf/{hero_pdf}" download><span class="ku">داگرتن</span><span class="en">Download</span> ↗</a>
+          <a class="product-link" href="../assets/pdf/{preview_pdf}" target="_blank" rel="noopener"><span class="ku">کردنەوە</span><span class="en">Open</span> ↗</a>
         </div>
-        <a class="pdf-thumb" href="../assets/pdf/{hero_pdf}" target="_blank" rel="noopener">
-          <img src="../assets/pdf/preview/{key}.webp" alt="{en} — PDF preview" loading="lazy">
+        <a class="pdf-thumb" href="../assets/pdf/{preview_pdf}" target="_blank" rel="noopener">
+          <img src="../assets/pdf/preview/{preview_key}.webp" alt="{en} PDF preview" loading="lazy">
         </a>
       </div>
     </div>
@@ -357,7 +468,7 @@ BODY = """<main class="product-page">
     <div class="wrap">
       <div class="cta-card reveal">
         <div>
-          <h2><span class="ku">با {ku} دابنێین</span><span class="en">Let’s set up {en}</span></h2>
+          <h2><span class="ku">با {ku} دابنێین</span><span class="en">Let's set up {en}</span></h2>
           <p><span class="ku">پەیوەندی بکە، کارەکەت دەبینین و پێشنیارێکی ڕوون دەدەینەوە.</span><span class="en">Tell us what you run today. You get a clear plan and a price.</span></p>
         </div>
         <div class="cta-actions">
@@ -383,25 +494,57 @@ BODY = """<main class="product-page">
 </html>
 """
 
+LONG_CATALOGUE = ("kisra-catalogue-long-a4.pdf", "کاتالۆگی تەواوی کۆمپانیا (٨ بەرهەم)", "Full company catalogue (8 products)")
+
 
 def build():
     os.makedirs(OUT, exist_ok=True)
     for p in DATA:
+        why = "\n".join(
+            f'<div class="why-item-light"><b><span class="ku">{t_ku}</span><span class="en">{t_en}</span></b>'
+            f'<p><span class="ku">{d_ku}</span><span class="en">{d_en}</span></p></div>'
+            for t_ku, t_en, d_ku, d_en in p.get("why", []))
+        how = "\n".join(
+            f'<div class="how-step"><span class="how-num">{i+1:02d}</span>'
+            f'<h3><span class="ku">{t_ku}</span><span class="en">{t_en}</span></h3>'
+            f'<p><span class="ku">{d_ku}</span><span class="en">{d_en}</span></p></div>'
+            for i, (t_ku, t_en, d_ku, d_en) in enumerate(p.get("how", [])))
+        stats = "\n".join(
+            f'<div class="stat-band-item"><b>{v}</b><span><span class="ku">{l_ku}</span><span class="en">{l_en}</span></span></div>'
+            for v, l_ku, l_en in p.get("stats", []))
         features = "\n".join(
             f'<li><span class="ku">{ku}</span><span class="en">{en}</span></li>'
             for ku, en in p["features"])
         shots = "\n".join(
             f'<figure><img src="../assets/shots/{s}" alt="{p["en"]} screenshot" loading="lazy"></figure>'
             for s in p["shots"])
+        packages = "\n".join(
+            f'<div class="pkg"><b><span class="ku">{n_ku}</span><span class="en">{n_en}</span></b>'
+            f'<div class="pkg-price">{pr_ku}<span class="pkg-price-en">{pr_en}</span></div>'
+            f'<p><span class="ku">{note_ku}</span><span class="en">{note_en}</span></p></div>'
+            for n_ku, n_en, pr_ku, pr_en, note_ku, note_en in p.get("packages", []))
+
+        mkt = marketing_pdfs(p["key"])
+        dl = []
+        for f, l_ku, l_en in mkt:
+            dl.append((f, f"کاتالۆگی فەرمی — {l_ku}", f"Marketing catalogue — {l_en}"))
+        dl.append((p["pdfs"][0][0], "پەڕەی بەرهەم (١ لاپەڕە)", "Product sheet (1 page)"))
+        for f, ku, en in p["pdfs"][1:]:
+            if not f.startswith("marketing/"):
+                dl.append((f, ku, en))
+        dl.append(LONG_CATALOGUE)
         pdfs = "\n".join(
-            f'''<a class="dl-card" href="../assets/pdf/{f}" download>
-                  <span class="dl-ext">PDF</span>
-                  <b><span class="ku">{ku}</span><span class="en">{en}</span></b>
-                  <span class="dl-arrow">↓</span>
-                </a>''' for f, ku, en in p["pdfs"])
+            f'<a class="dl-card" href="../assets/pdf/{f}" download>'
+            f'<span class="dl-ext">PDF</span>'
+            f'<b><span class="ku">{ku}</span><span class="en">{en}</span></b>'
+            f'<span class="dl-arrow">↓</span></a>' for f, ku, en in dl)
+
+        catalog = mkt[0][0] if mkt else p["pdfs"][0][0]
+        preview_pdf = mkt[0][0] if mkt else p["pdfs"][0][0]
+
         faq = "\n".join(
-            f'''<details class="faq-item"><summary><span class="ku">{q_ku}</span><span class="en">{q_en}</span></summary>
-                  <p class="ku">{a_ku}</p><p class="en">{a_en}</p></details>'''
+            f'<details class="faq-item"><summary><span class="ku">{q_ku}</span><span class="en">{q_en}</span></summary>'
+            f'<p class="ku">{a_ku}</p><p class="en">{a_en}</p></details>'
             for q_ku, q_en, a_ku, a_en in p["faq"])
         tech = "\n".join(f'<span class="chip">{t}</span>' for t in p["tech"])
 
@@ -409,15 +552,17 @@ def build():
             key=p["key"], ku=p["ku"], en=p["en"],
             tag_ku=html.escape(p["tag_ku"]), tag_en=html.escape(p["tag_en"]),
             price=p["price"], price_ku=p["price_ku"], price_en=p["price_en"],
-            kicker=f'KISRA PRODUCT · {p["en"].upper()}',
+            kicker="KISRA PRODUCT · " + p["en"].upper(),
             overview_ku=p["overview_ku"], overview_en=p["overview_en"],
-            tech=tech, features=features, shots=shots, pdfs=pdfs, faq=faq,
-            hero=p["shots"][0], hero_pdf=p["pdfs"][0][0],
+            tech=tech, why=why, how=how, stats=stats,
+            features=features, shots=shots, packages=packages, pdfs=pdfs,
+            faq=faq, hero=p["shots"][0],
+            catalog=catalog, preview_pdf=preview_pdf, preview_key=p["key"],
             wa=WA, phone=PHONE, phone_raw=PHONE.replace(" ", ""), mail=MAIL,
         )
-        with open(os.path.join(OUT, f'{p["key"]}.html'), "w", encoding="utf-8") as f:
+        with open(os.path.join(OUT, p["key"] + ".html"), "w", encoding="utf-8") as f:
             f.write(html_out)
-        print("wrote", f'products/{p["key"]}.html')
+        print("wrote products/" + p["key"] + ".html", len(mkt), "marketing pdfs")
 
 
 if __name__ == "__main__":
