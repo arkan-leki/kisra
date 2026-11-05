@@ -20,8 +20,6 @@
     ['master-electric.png', 'Master Electric'],
     ['rad-al-taqa-sulaymaniyah.png', 'Rad Al-Taqa'],
     ['sfrda-1.png', 'Sfrda'],
-    ['xerazone.png', 'Xerazone'],
-    ['zander.png', 'Zander'],
   ];
 
   const grid = document.getElementById('clientsGrid');

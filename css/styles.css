@@ -114,14 +114,14 @@ html[lang="en"] .stat b{font-family:var(--font-latin);font-weight:800}
 .stat span{font-size:14.5px;color:var(--muted)}
 
 /* hero collage */
-.collage{position:relative;height:500px}
+.collage{position:relative;height:500px;padding-top:10px}
 .shot-card{
   position:absolute;background:#fff;border:1px solid var(--paper-200);border-radius:14px;
   padding:10px;box-shadow:var(--shadow-lg);overflow:hidden;
 }
 .shot-card img{border-radius:8px;width:100%}
 .shot-a{width:74%;left:4%;top:26px;z-index:3;transform:rotate(-1.6deg)}
-.shot-b{width:52%;right:0;top:0;z-index:2;transform:rotate(2.4deg)}
+.shot-b{width:52%;right:0;top:14px;z-index:2;transform:rotate(2.4deg)}
 .shot-c{width:48%;right:6%;bottom:0;z-index:4;transform:rotate(-2.6deg)}
 .badge-float{
   position:absolute;z-index:6;background:var(--ink);color:var(--paper);
