@@ -9,6 +9,19 @@ custom apps.
 - Catalogue PDFs in `assets/pdf/` (generated from `kisra-brand/catalogue`).
 - Client wall: 18 logos (same set as the Ferkar site).
 
+## Product pages
+
+`products/<key>.html` — one page per product (gihan, zuba, kapitan, custom, website,
+ecommerce, exam, app): overview, features, screens, **PDF downloads** (1-page sheet +
+detailed marketing PDF where it exists: Kapitan 16p, Puplis KU/AR/EN 9p) and a
+first-page PDF preview image.
+
+Regenerate after editing `tools/build_products.py`:
+
+```bash
+python3 tools/build_products.py
+```
+
 ## Local
 
 ```bash

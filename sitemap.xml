@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://arkan-leki.github.io/kisra/</loc><lastmod>2026-11-06</lastmod><priority>1.0</priority></url>
+  <url><loc>https://arkan-leki.github.io/kisra/</loc><priority>1.0</priority></url>
+  <url><loc>https://arkan-leki.github.io/kisra/products/gihan.html</loc><priority>0.8</priority></url>
+  <url><loc>https://arkan-leki.github.io/kisra/products/zuba.html</loc><priority>0.8</priority></url>
+  <url><loc>https://arkan-leki.github.io/kisra/products/kapitan.html</loc><priority>0.8</priority></url>
+  <url><loc>https://arkan-leki.github.io/kisra/products/custom.html</loc><priority>0.8</priority></url>
+  <url><loc>https://arkan-leki.github.io/kisra/products/website.html</loc><priority>0.8</priority></url>
+  <url><loc>https://arkan-leki.github.io/kisra/products/ecommerce.html</loc><priority>0.8</priority></url>
+  <url><loc>https://arkan-leki.github.io/kisra/products/exam.html</loc><priority>0.8</priority></url>
+  <url><loc>https://arkan-leki.github.io/kisra/products/app.html</loc><priority>0.8</priority></url>
 </urlset>
