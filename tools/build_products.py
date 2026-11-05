@@ -24,6 +24,13 @@ MAIL = "arkan.leki@gmail.com"
 MKT_DIR = os.path.join(ROOT, "assets", "pdf", "marketing")
 MKT_PREFIX = {"kapitan": "kapitanpos", "exam": "puplis"}
 
+# extra per-product downloads that are not the detected marketing catalogue
+EXTRA_DOWNLOADS = {
+    "gihan": [("marketing/gihan-guide-ku.pdf",
+               "ڕێبەری بەکارهێنەر — کوردی (١٥ لاپەڕە)",
+               "User guide — Kurdish (15 pages)")],
+}
+
 EXTRA = {
     "gihan": dict(
         why=[
@@ -321,6 +328,8 @@ def marketing_pdfs(key):
     out = []
     for f in files:
         name = os.path.basename(f)
+        if "guide" in name:
+            continue
         lang = "ku"
         for l in ("ku", "ar", "en"):
             if f"-{l}.pdf" in name or f"_{l}." in name:
@@ -532,6 +541,9 @@ def build():
         for f, ku, en in p["pdfs"][1:]:
             if not f.startswith("marketing/"):
                 dl.append((f, ku, en))
+        for f, ku, en in EXTRA_DOWNLOADS.get(p["key"], []):
+            if f not in [d[0] for d in dl]:
+                dl.append((f, ku, en))
         dl.append(LONG_CATALOGUE)
         pdfs = "\n".join(
             f'<a class="dl-card" href="../assets/pdf/{f}" download>'
@@ -541,6 +553,7 @@ def build():
 
         catalog = mkt[0][0] if mkt else p["pdfs"][0][0]
         preview_pdf = mkt[0][0] if mkt else p["pdfs"][0][0]
+        preview_key = ("mkt-" + p["key"]) if mkt else p["key"]
 
         faq = "\n".join(
             f'<details class="faq-item"><summary><span class="ku">{q_ku}</span><span class="en">{q_en}</span></summary>'
@@ -557,7 +570,7 @@ def build():
             tech=tech, why=why, how=how, stats=stats,
             features=features, shots=shots, packages=packages, pdfs=pdfs,
             faq=faq, hero=p["shots"][0],
-            catalog=catalog, preview_pdf=preview_pdf, preview_key=p["key"],
+            catalog=catalog, preview_pdf=preview_pdf, preview_key=preview_key,
             wa=WA, phone=PHONE, phone_raw=PHONE.replace(" ", ""), mail=MAIL,
         )
         with open(os.path.join(OUT, p["key"] + ".html"), "w", encoding="utf-8") as f:
