@@ -152,7 +152,7 @@ html[lang="en"] .stat b{font-family:var(--font-latin);font-weight:800}
 .product h3{font-size:21px;margin-top:2px}
 .product p{color:var(--slate);font-size:14.5px;line-height:1.6;min-height:44px}
 .product-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:6px;border-top:1px dashed var(--paper-200)}
-.price{font-family:var(--font-latin);font-weight:800;font-size:19px;color:var(--ink)}
+.price{font-family:var(--font-latin);font-weight:800;font-size:19px;color:var(--ink);direction:ltr;unicode-bidi:isolate}
 .price small{font-family:var(--font-body);font-weight:400;font-size:12.5px;color:var(--muted);display:block;line-height:1.3}
 .product-link{font-size:13.5px;font-weight:600;color:var(--gold-700);display:inline-flex;align-items:center;gap:6px}
 .product-link:hover{color:var(--ink)}
@@ -279,7 +279,7 @@ footer{border-top:1px solid var(--paper-200);padding:52px 0 40px;background:var(
 .pp-hero h1{font-size:clamp(34px,4vw,56px);margin:10px 0 14px}
 .pp-tag{color:var(--slate);font-size:18px;max-width:46ch}
 .pp-meta{display:flex;align-items:center;gap:26px;margin-top:28px;flex-wrap:wrap}
-.pp-price b{display:block;font-family:var(--font-latin);font-weight:800;font-size:34px;line-height:1.1}
+.pp-price b{display:block;font-family:var(--font-latin);font-weight:800;font-size:34px;line-height:1.1;direction:ltr;unicode-bidi:isolate;text-align:start}
 .pp-price small{font-size:14px;color:var(--slate)}
 .pp-shot{border-radius:18px;overflow:hidden;border:1px solid var(--paper-200);box-shadow:var(--shadow-lg);background:#fff}
 .pp-shot img{width:100%;height:auto}
