@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://arkan-leki.github.io/kisra/sitemap.xml
