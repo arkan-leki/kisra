@@ -93,8 +93,8 @@ EXTRA = {
         packages=[
             ("سەرەتا", "Starter", "٩٠٠ دۆلار+", "$900+", "١ کۆگا ، ٣ بەکارهێنەر", "1 warehouse, 3 users"),
             ("پیشەگەر", "Pro", "١,٨٠٠ دۆلار+", "$1,800+", "چەند کۆگا و لق ، ١٠ بەکارهێنەر", "multi-warehouse, 10 users"),
-            ("پۆرتاڵی کڕیار", "Customer portal", "٢,٥٠٠ دۆلار+", "$2,500+", "وێب بۆ کڕیار: باڵانس، قەرز و پسوولە", "customer web: balance, debt, invoices"),
-            ("فرۆشگای گشتی", "Public storefront", "٣,٥٠٠ دۆلار+", "$3,500+", "فرۆشگای گشتی + پۆرتاڵ", "public storefront + portal"),
+            ("پۆرتاڵی کڕیار", "Customer portal", "زیادە +٣٠٠ دۆلار", "+$300", "وێب بۆ کڕیار: باڵانس، قەرز و پسوولە", "customer web: balance, debt, invoices"),
+            ("فرۆشگای گشتی", "Public storefront", "زیادە +٤٠٠ دۆلار", "+$400", "فرۆشگای گشتی بۆ کڕیارانی نوێ", "public storefront for new customers"),
             ("کۆمپانیا", "Company", "پەیوەندی بکە", "contact us", "چەند کۆگا + بەڕێوەبردنی ٤ دوکان", "multi-warehouse + up to 4 shops"),
         ],
     ),
