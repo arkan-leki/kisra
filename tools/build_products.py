@@ -498,9 +498,44 @@ BODY = """<main class="product-page">
 
 <footer>
   <div class="wrap">
-    <div class="foot-bottom" style="margin-top:0;border-top:0;padding-top:0">
-      <span class="mono">© <span id="year">2026</span> KISRA TECH — KURDISTAN REGION, IRAQ</span>
-      <a class="mono" href="../index.html"><span class="ku">گەڕانەوە بۆ سەرەتا</span><span class="en">Back to home</span></a>
+    <div class="foot-top">
+      <div class="foot-brand">
+        <img class="foot-logo ku" src="../assets/logo/lockup-ku-dark.png" alt="Kisra Tech — کیسرا تێک">
+        <img class="foot-logo en" src="../assets/logo/lockup-en-dark.png" alt="Kisra Tech">
+        <p><span class="ku">سیستەم بۆ بازرگانی. دروستکراوە لە کوردستان، بۆ کوردستان.</span><span class="en">Business software. Built in Kurdistan, for Kurdistan.</span></p>
+        <div class="foot-social">
+          <a href="https://wa.me/9647706947874" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg></a>
+          <a href="mailto:arkan.leki@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+          <a href="../assets/pdf/kisra-catalogue-long-a4.pdf" download aria-label="Catalogue PDF" title="Catalogue PDF"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4><span class="ku">بەرهەمەکان</span><span class="en">Products</span></h4>
+        <a href="gihan.html"><span class="ku">گیهان</span><span class="en">Gihan</span></a>
+        <a href="zuba.html"><span class="ku">زوبا</span><span class="en">Zuba</span></a>
+        <a href="kapitan.html"><span class="ku">کاپیتان پۆس</span><span class="en">Kapitan POS</span></a>
+        <a href="exam.html"><span class="ku">سیستەمی تاقیکردنەوە</span><span class="en">Exam system</span></a>
+        <a href="custom.html"><span class="ku">پرۆژەی تایبەت</span><span class="en">Custom build</span></a>
+      </div>
+      <div class="foot-col">
+        <h4><span class="ku">کۆمپانیا</span><span class="en">Company</span></h4>
+        <a href="../index.html#work"><span class="ku">کارەکانمان</span><span class="en">Work</span></a>
+        <a href="../index.html#clients"><span class="ku">کڕیارەکان</span><span class="en">Clients</span></a>
+        <a href="../index.html#services"><span class="ku">خزمەتگوزارییەکان</span><span class="en">Services</span></a>
+        <a href="../assets/pdf/kisra-catalogue-long-a4.pdf" download><span class="ku">کاتالۆگ (PDF)</span><span class="en">Catalogue (PDF)</span></a>
+      </div>
+      <div class="foot-col">
+        <h4><span class="ku">پەیوەندی</span><span class="en">Contact</span></h4>
+        <a href="mailto:arkan.leki@gmail.com" dir="ltr">arkan.leki@gmail.com</a>
+        <a href="tel:+9647706947874" dir="ltr">+964 770 694 7874</a>
+        <a href="https://wa.me/9647706947874" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="../index.html#contact"><span class="ku">فۆرمی پەیوەندی</span><span class="en">Get in touch</span></a>
+      </div>
+    </div>
+    <div class="foot-wordmark">Kisra<span class="dot">.</span>Tech</div>
+    <div class="foot-bottom">
+      <span dir="ltr">© <span id="year">2026</span> KISRA TECH — KURDISTAN REGION, IRAQ</span>
+      <a href="../index.html"><span class="ku">گەڕانەوە بۆ سەرەتا</span><span class="en">Back to home</span></a>
     </div>
   </div>
 </footer>
