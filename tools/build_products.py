@@ -27,7 +27,7 @@ MKT_PREFIX = {"kapitan": "kapitanpos", "exam": "puplis"}
 # extra per-product downloads that are not the detected marketing catalogue
 EXTRA_DOWNLOADS = {
     "gihan": [("marketing/gihan-guide-ku.pdf",
-               "ڕێبەری بەکارهێنەر — کوردی (١٥ لاپەڕە)",
+               "ڕێبەری بەکارهێنەر ، کوردی (١٥ لاپەڕە)",
                "User guide — Kurdish (15 pages)")],
 }
 
@@ -46,7 +46,7 @@ EXTRA = {
         ],
         how=[
             ("کاڵا و کۆگا دابنێ", "Add products and stock",
-             "کاڵا، بارکۆد، نرخ و کۆگا هاوردە دەکرێت — یان لە Excel.",
+             "کاڵا، بارکۆد، نرخ و کۆگا هاوردە دەکرێت ، یان لە Excel.",
              "Import from Excel, or type them in."),
             ("کاشێر و کارمەندان ڕێک بخە", "Set up cashier and staff",
              "ڕۆڵ و دەسەڵات بۆ هەر کارمەندێک، سندوق و شیفت.",
@@ -60,7 +60,7 @@ EXTRA = {
                ("∞", "بەکارهێنەر بەپێی پاکێج", "users by package")],
         packages=[
             ("سەرەتا", "Starter", "٧٥٠,٠٠٠ دینار", "750,000 IQD", "١ فرۆشگا ، ٣ بەکارهێنەر", "1 shop, 3 users"),
-            ("پیشەگەر", "Pro", "١,٥٠٠,٠٠٠ دینار", "1,500,000 IQD", "چەند فرۆشگا/لق ، ١٠ بەکارهێنەر", "multi-shop, 10 users"),
+            ("پیشەگەر", "Pro", "١,٥٠٠,٠٠٠ دینار", "1,500,000 IQD", "چەند فرۆشگا،لق ، ١٠ بەکارهێنەر", "multi-shop, 10 users"),
             ("کۆمپانیا", "Company", "پەیوەندی بکە", "contact us", "بێ سنوور ، دابەشکردن", "unlimited, distribution"),
         ],
     ),
@@ -92,8 +92,10 @@ EXTRA = {
                ("∞", "لق و کۆگا", "branches and warehouses")],
         packages=[
             ("سەرەتا", "Starter", "٩٠٠ دۆلار+", "$900+", "١ کۆگا ، ٣ بەکارهێنەر", "1 warehouse, 3 users"),
-            ("پیشەگەر", "Pro", "١,٨٠٠ دۆلار+", "$1,800+", "چەند کۆگا/لق ، ١٠ بەکارهێنەر", "multi-warehouse, 10 users"),
-            ("کۆمپانیا", "Company", "پەیوەندی بکە", "contact us", "بێ سنوور ، فرە کۆمپانیا", "unlimited, multi-company"),
+            ("پیشەگەر", "Pro", "١,٨٠٠ دۆلار+", "$1,800+", "چەند کۆگا و لق ، ١٠ بەکارهێنەر", "multi-warehouse, 10 users"),
+            ("پۆرتاڵی کڕیار", "Customer portal", "٢,٥٠٠ دۆلار+", "$2,500+", "وێب بۆ کڕیار: باڵانس، قەرز و پسوولە", "customer web: balance, debt, invoices"),
+            ("فرۆشگای گشتی", "Public storefront", "٣,٥٠٠ دۆلار+", "$3,500+", "فرۆشگای گشتی + پۆرتاڵ", "public storefront + portal"),
+            ("کۆمپانیا", "Company", "پەیوەندی بکە", "contact us", "چەند کۆگا + بەڕێوەبردنی ٤ دوکان", "multi-warehouse + up to 4 shops"),
         ],
     ),
     "kapitan": dict(
@@ -112,7 +114,7 @@ EXTRA = {
              "چێشتخانە میوانداری دەکات؛ گارسۆن بە QR پەیوەست دەبێت.",
              "The kitchen hosts; the waiter joins with a QR code."),
             ("مێنیو و مێز دابنێ", "Add menu and tables",
-             "مێنیو بە دوو ناو (کوردی/ئینگلیزی) و مێزەکان.",
+             "مێنیو بە دوو ناو (کوردی،ئینگلیزی) و مێزەکان.",
              "Menu with two names (Kurdish/English) and your tables."),
             ("بفرۆشە و چاپ بکە", "Sell and print",
              "پسوولە بە بلوتووث چاپ دەبێت؛ تیکتی چێشتخانە بێ نرخ.",
@@ -124,7 +126,7 @@ EXTRA = {
         packages=[
             ("کافێ", "Cafe", "٥٠٠,٠٠٠ دینار", "500,000 IQD", "تا ٣ ئامێر + پرینتەر ، ساڵانە ١٥٠,٠٠٠", "up to 3 devices + printer, 150,000/yr"),
             ("ئامێری زیادە", "Extra device", "١٠٠,٠٠٠ دینار", "100,000 IQD", "هەر ئامێرێکی تر", "each additional device"),
-            ("چەند لق / تایبەت", "Multi-branch / custom", "پەیوەندی بکە", "contact us", "بەپێی پێویست", "tailored"),
+            ("چەند لق و تایبەت", "Multi-branch / custom", "پەیوەندی بکە", "contact us", "بەپێی پێویست", "tailored"),
         ],
     ),
     "custom": dict(
@@ -191,12 +193,12 @@ EXTRA = {
     ),
     "exam": dict(
         why=[
-            ("لیژنە بە دەست", "Papers by hand", "هەر هەفتەیەک لیژنەی کاغەزەکە دەنووسرێتەوە — ئەمە ئەو کارە دەکات.", "Weekly paper assembly is done by the system."),
+            ("لیژنە بە دەست", "Papers by hand", "هەر هەفتەیەک لیژنەی کاغەزەکە دەنووسرێتەوە ، ئەمە ئەو کارە دەکات.", "Weekly paper assembly is done by the system."),
             ("بێ ئینتەرنێت لە کاتی تاقیکردنەوە", "No internet during the exam", "لەسەر سێرڤەرێکی ناوخۆیی کار دەکات؛ هیچ وەڵامێک لەدەست ناچێت.", "Runs on a local server; no answer is lost."),
             ("نمرەدان بە یەکجا", "One-pass grading", "هەموو وەڵامەکان یەکجا هەڵدەسەنگێنرێن و ڕاپۆرت دروست دەبێت.", "Every answer is graded together and reports are generated."),
         ],
         how=[
-            ("تاقیکردنەوە دروست بکە", "Build the exam", "پرسیارەکان بە CSV/JSON هاوردە دەکرێن یان دەنووسرێن.", "Import questions from CSV/JSON or write them."),
+            ("تاقیکردنەوە دروست بکە", "Build the exam", "پرسیارەکان بە CSV،JSON هاوردە دەکرێن یان دەنووسرێن.", "Import questions from CSV/JSON or write them."),
             ("بڵاوی بکەوە", "Publish", "کۆدێک بۆ خوێندکاران؛ شاشەی تاقیکردنەوە و کاتژمێر.", "An access code for students; exam screen and timer."),
             ("ئەنجام ببینە", "See results", "نمرە، فلتەر، CSV و چاپ.", "Marks, filters, CSV and printing."),
         ],
@@ -205,7 +207,7 @@ EXTRA = {
                ("٥٠", "خوێندکار بەیەکەوە", "students at once")],
         packages=[("پەیمانگا", "Institute", "١,٠٠٠,٠٠٠ دینار", "1,000,000 IQD", "تا ٣٠٠ خوێندکار ، ساڵانە ٣٠٠,٠٠٠", "up to 300 students, 300,000/yr"),
                   ("زانکۆ", "University", "٢,٠٠٠,٠٠٠ دینار", "2,000,000 IQD", "تا ١,٥٠٠ خوێندکار ، ساڵانە ٥٠٠,٠٠٠", "up to 1,500 students, 500,000/yr"),
-                  ("تایبەت", "Custom", "پەیوەندی بکە", "contact us", "بێ سنوور / چەند کەمپەس", "unlimited / multi-campus")],
+                  ("تایبەت", "Custom", "پەیوەندی بکە", "contact us", "بێ سنوور و چەند کەمپەس", "unlimited / multi-campus")],
     ),
     "app": dict(
         why=[
@@ -215,7 +217,7 @@ EXTRA = {
         ],
         how=[
             ("بیرۆکە و پلان", "Idea and plan", "مەودای کار، شاشەکان و مۆدێل.", "Scope, screens and data model."),
-            ("ئەپ و پانێڵ", "App and panel", "ئەپی کڕیار/کارمەند + پانێڵی وێب.", "Customer/staff apps + web panel."),
+            ("ئەپ و پانێڵ", "App and panel", "ئەپی کڕیار،کارمەند + پانێڵی وێب.", "Customer/staff apps + web panel."),
             ("بڵاوکردنەوە", "Launch", "ئەپ ستۆر، گووگڵ پلەی و راهێنان.", "App Store, Google Play and training."),
         ],
         stats=[("٢", "ئەپ", "apps"), ("$5000+", "سەرەتا", "from"), ("٢–٤", "مانگ", "months")],
@@ -229,20 +231,20 @@ EXTRA = {
 ENRICH = {
     "gihan": dict(
         features=[
-            ("کاشێری خێرا + چاپ/واتسئاپی پسووڵە", "Fast cashier + print/WhatsApp receipt"),
+            ("کاشێری خێرا + چاپ،واتسئاپی پسووڵە", "Fast cashier + print/WhatsApp receipt"),
             ("کۆدی کڕیار و گروپی داشکاندن", "Customer codes and discount groups"),
             ("چوار کەناڵی فرۆشتن لە یەک شوێن", "Four sales channels in one place"),
             ("قازانجی هەر داواکارییەک", "Profit on every order"),
             ("کۆگا بە لیستری جووڵە", "Stock with a movement ledger"),
-            ("چەند فرۆشگا/لق لە یەک سیستەم", "Multi-store / multi-branch in one system"),
+            ("چەند فرۆشگا،لق لە یەک سیستەم", "Multi-store / multi-branch in one system"),
             ("ڕۆڵ و دەسەڵات بۆ کاشێر و بەڕێوەبەر", "Roles and permissions for cashier and manager"),
             ("کۆنتەرۆلی سندوق و ڕاپۆرتی ڕۆژانە", "Cash drawer control and daily reports"),
             ("کۆمیشنی ئەپی گەیاندن وەک خەرجی", "Delivery commission recorded as an expense"),
-            ("PWA — کارکردن لە وێبگەڕ بێ دامەزراندن", "PWA — runs in the browser, no install"),
+            ("PWA ، کارکردن لە وێبگەڕ بێ دامەزراندن", "PWA — runs in the browser, no install"),
         ],
         faq=[
             ("بە چ زمانێکە؟", "Which languages?", "کوردی، عەرەبی، فارسی و ئینگلیزی، RTL تەواو.", "Kurdish, Arabic, Persian and English, full RTL."),
-            ("داتای کۆنم دەگوازرێتەوە؟", "Can my old data move?", "بەڵێ، کاڵا/کڕیار/قەرز لە Excel.", "Yes — products, customers and debt from Excel."),
+            ("داتای کۆنم دەگوازرێتەوە؟", "Can my old data move?", "بەڵێ، کاڵا،کڕیار،قەرز لە Excel.", "Yes — products, customers and debt from Excel."),
             ("لە کوێ کار دەکات؟", "Where does it run?", "سێرڤەری خۆت یان هەور؛ لە وێبگەڕ لەسەر PC، تابلێت و مۆبایل.", "Your server or the cloud; in a browser on PC, tablet and phone."),
             ("ئەپ هەیە؟", "Is there a mobile app?", "نا، بەڵام PWA وەک ئەپ لەسەر مۆبایل دادەبەزێت.", "No, but the PWA installs like an app."),
             ("پشتگیری؟", "Support?", "٣ مانگ لەخۆدەگرێت.", "3 months included."),
@@ -252,7 +254,7 @@ ENRICH = {
     "zuba": dict(
         features=[
             ("فرۆشتن و چاپکردنی پسووڵە", "Sales and printable invoices"),
-            ("پێشکەشکردن / پێشنووس", "Quotations and offers"),
+            ("پێشکەشکردن و پێشنووس", "Quotations and offers"),
             ("گەڕاندنەوەی کاڵا و داشکاندن", "Returns and discounts"),
             ("بەڕێوەبردنی کۆگا و بارکۆد", "Inventory and barcode management"),
             ("ئاگادارکردنەوەی کەمبوونی کۆگا", "Low-stock alerts"),
@@ -263,6 +265,9 @@ ENRICH = {
             ("بەکارهێنەر، ڕۆڵ و دەسەڵات", "Users, roles and permissions"),
             ("سێ زمان + ڕاستبۆچەپ (RTL)", "Three languages with full RTL"),
             ("گەڕانی خێرا بە بارکۆد و مۆبایل", "Fast search by barcode and phone"),
+            ("پۆرتاڵی وێب بۆ کڕیار: باڵانس، قەرز و پسوولە", "Customer web portal: balance, debt and invoices"),
+            ("فرۆشگای گشتی بۆ کڕیارانی نوێ", "Public storefront for new customers"),
+            ("چەند کۆگا و بەڕێوەبردنی چەند دوکان (وەک ئۆنلاین کۆمپانی)", "Several warehouses and several shops (like Online Company)"),
         ],
         faq=[
             ("لە کوێ کار دەکات؟", "Where does it run?", "لەسەر سێرڤەری خۆت یان هەور؛ بە وێبگەڕ.", "On your server or the cloud, through a browser."),
@@ -281,13 +286,13 @@ ENRICH = {
             ("هاوتاکردنی خۆکاری ئامێرەکان لەسەر WiFi", "Automatic device sync over WiFi"),
             ("چاپکردنی خۆکاری پسووڵە بە Bluetooth", "Automatic Bluetooth receipt printing"),
             ("تیکتی چێشتخانە بێ نرخ", "Kitchen ticket without prices"),
-            ("مێنیو بە دوو ناو (کوردی/ئینگلیزی)", "Menu with two names (Kurdish/English)"),
-            ("داتا لەسەر ئامێر — بێ کرێی مانگانە", "On-device data — no monthly bill"),
+            ("مێنیو بە دوو ناو (کوردی،ئینگلیزی)", "Menu with two names (Kurdish/English)"),
+            ("داتا لەسەر ئامێر ، بێ کرێی مانگانە", "On-device data — no monthly bill"),
         ],
         faq=[
             ("ئینتەرنێت پێویستە؟", "Is internet required?", "نا؛ تەنها WiFi ی دوکان یان هۆتسپۆتی مۆبایل.", "No — only local WiFi or a phone hotspot."),
             ("چەند ئامێر؟", "How many devices?", "٢–٣ (وەیتەر، چێشتخانە، کاشێر)، هەر ئامێرێک ڕۆڵێکی هەیە.", "2–3 (waiter, kitchen, cashier), each with its own role."),
-            ("چ پرینتەرێک؟", "Which printer?", "٨٠ ملم گەرمی بە Bluetooth (ESC/POS).", "80 mm thermal over Bluetooth (ESC/POS)."),
+            ("چ پرینتەرێک؟", "Which printer?", "٨٠ ملم گەرمی بە Bluetooth (ESC،POS).", "80 mm thermal over Bluetooth (ESC/POS)."),
             ("پسووڵە بە کوردی؟", "Kurdish receipts?", "نا؛ پرینتەرەکانی گەرمی کوردی پشتگیری ناکەن. ناوی کاڵا لە ئەپدا کوردی دەردەکەوێت.", "No — thermal printers don't render Kurdish; product names show in Kurdish in the app."),
             ("ئایفۆن؟", "iPhone?", "نا، تەنها ئەندرۆید.", "No — Android only."),
             ("نرخ؟", "Price?", "بەپێی پاکێج.", "By package."),
@@ -297,7 +302,7 @@ ENRICH = {
         features=[
             ("دروستکردن و بڵاوکردنەوەی تاقیکردنەوە بە کۆد", "Build and publish exams with an access code"),
             ("شەش جۆری پرسیار", "Six question types"),
-            ("هاوردەکردنی CSV/JSON بە ڕاپۆرتی پێشوەخت", "CSV/JSON import with a dry-run report"),
+            ("هاوردەکردنی CSV،JSON بە ڕاپۆرتی پێشوەخت", "CSV/JSON import with a dry-run report"),
             ("شاشەی خوێندکار: یەک پرسیار، پالێت، کاتژمێر", "Student screen: one question, palette, timer"),
             ("دانیشتنی ئۆفلاین بە ناردنی خۆکار", "Offline sitting with queued submit"),
             ("ئەنجام، فلتەر، CSV و چاپ", "Results, filters, CSV and printing"),
@@ -360,7 +365,7 @@ HEAD = """<!DOCTYPE html>
 <header class="nav" id="nav">
   <div class="wrap nav-in">
     <a class="brand" href="../index.html" aria-label="Kisra Tech">
-      <img class="ku" src="../assets/logo/lockup-ku.png" alt="Kisra Tech — کیسرا تێک">
+      <img class="ku" src="../assets/logo/lockup-ku.png" alt="Kisra Tech ، کیسرا تێک">
       <img class="en" src="../assets/logo/lockup-en.png" alt="Kisra Tech">
     </a>
     <nav class="nav-links" id="navLinks">
@@ -536,7 +541,7 @@ def build():
         mkt = marketing_pdfs(p["key"])
         dl = []
         for f, l_ku, l_en in mkt:
-            dl.append((f, f"کاتالۆگی فەرمی — {l_ku}", f"Marketing catalogue — {l_en}"))
+            dl.append((f, f"کاتالۆگی فەرمی ، {l_ku}", f"Marketing catalogue — {l_en}"))
         dl.append((p["pdfs"][0][0], "پەڕەی بەرهەم (١ لاپەڕە)", "Product sheet (1 page)"))
         for f, ku, en in p["pdfs"][1:]:
             if not f.startswith("marketing/"):

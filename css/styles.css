@@ -337,7 +337,7 @@ footer{border-top:1px solid var(--paper-200);padding:52px 0 40px;background:var(
 .feature-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px 28px}
 .feature-grid li{position:relative;padding-inline-start:30px;color:var(--ink-600);font-size:15.5px}
 .feature-grid li::before{content:'';position:absolute;inset-inline-start:0;top:.58em;width:14px;height:2px;background:var(--gold)}
-.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pkg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
 .pkg{background:#fff;border:1px solid var(--paper-200);border-radius:16px;padding:24px;position:relative}
 .pkg:hover{border-color:var(--gold);box-shadow:var(--shadow-sm)}
 .pkg b{font-size:17px}
