@@ -192,8 +192,8 @@ DATA = [
         tag_ku="سیستەمێکی تاقیکردنەوەی ئۆنلاین کە پێویستی بە ئینتەرنێت نییە لە کاتی تاقیکردنەوەدا.",
         tag_en="Online exams that need no internet during the test.",
         price="$1500–2000", price_ku="دۆلار، ساڵانە ٣٠٠ دۆلار", price_en="+ $300/yr",
-        overview_ku="سیستەمی تاقیکردنەوەی پەیمانگا و زانکۆ: لیژنەی کاغەزەکە خۆکار ئامادە دەکات، خوێندکاران لە وێبگەڕ تاقیکردنەوە دەکەن، و هەموو وەڵامەکان یەکجا هەڵدەسەنگێنرێن. لە ماوەی تاقیکردنەوەدا پێویستی بە ئینتەرنێت نییە.",
-        overview_en="An exam system for institutes and universities: papers are generated automatically, students take the test in a browser, and every answer is graded in one pass. No internet is needed during the exam.",
+        overview_ku="سیستەمی تاقیکردنەوەی پەیمانگا و زانکۆ: لیژنە بە CSV یان Excel هاوردە دەکرێت، خوێندکاران لە وێبگەڕ تاقیکردنەوە دەکەن، و هەموو وەڵامەکان یەکجا هەڵدەسەنگێنرێن. لە ماوەی تاقیکردنەوەدا پێویستی بە ئینتەرنێت نییە.",
+        overview_en="An exam system for institutes and universities: papers are imported from CSV or Excel, students take the test in a browser, and all answers are graded in one pass. No internet is needed during the exam.",
         features=[
             ("لیژنە لە CSV و Excel هاوردە دەکرێت", "Papers imported from CSV and Excel"),
             ("خوێندکاران لە وێبگەڕ تاقیکردنەوە دەکەن", "Students take exams in the browser"),
