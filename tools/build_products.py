@@ -91,8 +91,8 @@ EXTRA = {
                ("٣", "زمان لەگەڵ RTL", "languages with RTL"),
                ("∞", "لق و کۆگا", "branches and warehouses")],
         packages=[
-            ("سەرەتا", "Starter", "٨٠٠ دۆلار+", "$800+", "١ کۆگا ، ٣ بەکارهێنەر", "1 warehouse, 3 users"),
-            ("پیشەگەر", "Pro", "١,٥٠٠ دۆلار+", "$1,500+", "چەند کۆگا/لق ، ١٠ بەکارهێنەر", "multi-warehouse, 10 users"),
+            ("سەرەتا", "Starter", "٩٠٠ دۆلار+", "$900+", "١ کۆگا ، ٣ بەکارهێنەر", "1 warehouse, 3 users"),
+            ("پیشەگەر", "Pro", "١,٨٠٠ دۆلار+", "$1,800+", "چەند کۆگا/لق ، ١٠ بەکارهێنەر", "multi-warehouse, 10 users"),
             ("کۆمپانیا", "Company", "پەیوەندی بکە", "contact us", "بێ سنوور ، فرە کۆمپانیا", "unlimited, multi-company"),
         ],
     ),

@@ -19,7 +19,7 @@ DATA = [
         kind_ku="سیستەمی بەڕێوەبردنی دوکان", kind_en="Retail ERP",
         tag_ku="فرۆشتن ، کۆگا و ڕاپۆرت لە یەک شاشەدا . بۆ دوکانەکانی تاکە لق و فرە لق.",
         tag_en="Sales, stock and reports in one screen — for single and multi-branch shops.",
-        price="$500+", price_ku="دۆلار و زیاتر", price_en="from",
+        price="$600+", price_ku="دۆلار و زیاتر", price_en="from",
         overview_ku="گیهان سیستەمێکی تەواوی فرۆشتن و کۆگایە. هەر داواکارییەک لە هەر کەناڵێکەوە بێت — دوکان، کۆمەڵ، سۆشیاڵ میدیا یان ئەپی گەیاندن — لە یەک شوێن تۆمار دەکرێت و قازانجی ڕاستەقینە دەردەخات: نرخی فرۆشتن کەم کراوە لە تێچووی کاڵا، کۆمیشن و داشکاندن.",
         overview_en="Gihan is a complete sales and stock system. Every order from every channel — storefront, wholesale, social media or delivery apps — is recorded in one place and shows real profit: sale price minus product cost, channel commission and discount.",
         features=[
@@ -47,7 +47,7 @@ DATA = [
         kind_ku="سیستەمی بەڕێوەبردنی دابەشکردن", kind_en="Distribution ERP",
         tag_ku="کۆگا ، کڕیار و قەرز بۆ کۆمپانیاکانی دابەشکردن و بەتاڵفرۆشی.",
         tag_en="Stock, customers and debt for distribution and wholesale companies.",
-        price="$800+", price_ku="دۆلار و زیاتر", price_en="from",
+        price="$900+", price_ku="دۆلار و زیاتر", price_en="from",
         overview_ku="زوبا بۆ کۆمپانیاکانی دابەشکردن دروست کراوە: کۆگای فرە شوێن، کڕین و گەڕاندنەوە، قەرزی کڕیار و دابینکەر، پارەدان و حیسابات، و ڕاپۆرتی بەشداران — هەمووی لە یەک سیستەمدا.",
         overview_en="Zuba is built for distribution companies: multi-location stock, purchasing and returns, customer and supplier debt, payments and accounting, partner reports — all in one system.",
         features=[
