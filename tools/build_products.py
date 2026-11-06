@@ -27,7 +27,7 @@ MKT_PREFIX = {"kapitan": "kapitanpos", "exam": "puplis"}
 # extra per-product downloads that are not the detected marketing catalogue
 EXTRA_DOWNLOADS = {
     "gihan": [("marketing/gihan-guide-ku.pdf",
-               "ڕێبەری بەکارهێنەر ، کوردی (١٥ لاپەڕە)",
+               "ڕێبەری بەکارهێنەر، کوردی (١٥ لاپەڕە)",
                "User guide — Kurdish (15 pages)")],
 }
 
@@ -46,7 +46,7 @@ EXTRA = {
         ],
         how=[
             ("کاڵا و کۆگا دابنێ", "Add products and stock",
-             "کاڵا، بارکۆد، نرخ و کۆگا هاوردە دەکرێت ، یان لە Excel.",
+             "کاڵا، بارکۆد، نرخ و کۆگا هاوردە دەکرێت، یان لە Excel.",
              "Import from Excel, or type them in."),
             ("کاشێر و کارمەندان ڕێک بخە", "Set up cashier and staff",
              "ڕۆڵ و دەسەڵات بۆ هەر کارمەندێک، سندوق و شیفت.",
@@ -59,9 +59,9 @@ EXTRA = {
                ("٤", "زمان لەگەڵ RTL", "languages with RTL"),
                ("∞", "بەکارهێنەر بەپێی پاکێج", "users by package")],
         packages=[
-            ("سەرەتا", "Starter", "٧٥٠,٠٠٠ دینار", "750,000 IQD", "١ فرۆشگا ، ٣ بەکارهێنەر", "1 shop, 3 users"),
-            ("پیشەگەر", "Pro", "١,٥٠٠,٠٠٠ دینار", "1,500,000 IQD", "چەند فرۆشگا،لق ، ١٠ بەکارهێنەر", "multi-shop, 10 users"),
-            ("کۆمپانیا", "Company", "پەیوەندی بکە", "contact us", "بێ سنوور ، دابەشکردن", "unlimited, distribution"),
+            ("سەرەتا", "Starter", "٧٥٠,٠٠٠ دینار", "750,000 IQD", "١ فرۆشگا، ٣ بەکارهێنەر", "1 shop, 3 users"),
+            ("پیشەگەر", "Pro", "١,٥٠٠,٠٠٠ دینار", "1,500,000 IQD", "چەند فرۆشگا،لق، ١٠ بەکارهێنەر", "multi-shop, 10 users"),
+            ("کۆمپانیا", "Company", "پەیوەندی بکە", "contact us", "بێ سنوور، دابەشکردن", "unlimited, distribution"),
         ],
     ),
     "zuba": dict(
@@ -87,12 +87,12 @@ EXTRA = {
              "پسوولە، پێشکەشکردن، گەڕاندنەوە و پارەدان.",
              "Invoices, quotations, returns and payments."),
         ],
-        stats=[("١٢", "تایبەتمەندی سەرەکی", "core features"),
+        stats=[("١٥", "تایبەتمەندی سەرەکی", "core features"),
                ("٣", "زمان لەگەڵ RTL", "languages with RTL"),
                ("∞", "لق و کۆگا", "branches and warehouses")],
         packages=[
-            ("سەرەتا", "Starter", "٩٠٠ دۆلار+", "$900+", "١ کۆگا ، ٣ بەکارهێنەر", "1 warehouse, 3 users"),
-            ("پیشەگەر", "Pro", "١,٨٠٠ دۆلار+", "$1,800+", "چەند کۆگا و لق ، ١٠ بەکارهێنەر", "multi-warehouse, 10 users"),
+            ("سەرەتا", "Starter", "٩٠٠ دۆلار+", "$900+", "١ کۆگا، ٣ بەکارهێنەر", "1 warehouse, 3 users"),
+            ("پیشەگەر", "Pro", "١,٨٠٠ دۆلار+", "$1,800+", "چەند کۆگا و لق، ١٠ بەکارهێنەر", "multi-warehouse, 10 users"),
             ("پۆرتاڵی کڕیار", "Customer portal", "زیادە +٣٠٠ دۆلار", "+$300", "وێب بۆ کڕیار: باڵانس، قەرز و پسوولە", "customer web: balance, debt, invoices"),
             ("فرۆشگای گشتی", "Public storefront", "زیادە +٤٠٠ دۆلار", "+$400", "فرۆشگای گشتی بۆ کڕیارانی نوێ", "public storefront for new customers"),
             ("کۆمپانیا", "Company", "پەیوەندی بکە", "contact us", "چەند کۆگا + بەڕێوەبردنی ٤ دوکان", "multi-warehouse + up to 4 shops"),
@@ -124,7 +124,7 @@ EXTRA = {
                ("٠", "ئینتەرنێت پێویست", "internet required"),
                ("<١s", "هاوکاتکردن", "sync time")],
         packages=[
-            ("کافێ", "Cafe", "٥٠٠,٠٠٠ دینار", "500,000 IQD", "تا ٣ ئامێر + پرینتەر ، ساڵانە ١٥٠,٠٠٠", "up to 3 devices + printer, 150,000/yr"),
+            ("کافێ", "Cafe", "٥٠٠,٠٠٠ دینار", "500,000 IQD", "تا ٣ ئامێر + پرینتەر، ساڵانە ١٥٠,٠٠٠", "up to 3 devices + printer, 150,000/yr"),
             ("ئامێری زیادە", "Extra device", "١٠٠,٠٠٠ دینار", "100,000 IQD", "هەر ئامێرێکی تر", "each additional device"),
             ("چەند لق و تایبەت", "Multi-branch / custom", "پەیوەندی بکە", "contact us", "بەپێی پێویست", "tailored"),
         ],
@@ -193,20 +193,20 @@ EXTRA = {
     ),
     "exam": dict(
         why=[
-            ("لیژنە بە دەست", "Papers by hand", "هەر هەفتەیەک لیژنەی کاغەزەکە دەنووسرێتەوە ، ئەمە ئەو کارە دەکات.", "Weekly paper assembly is done by the system."),
+            ("لیژنە بە دەست", "Papers by hand", "لیژنە بە CSV یان Excel دروست دەکرێت و هاوردە دەکرێت، نەک بە دەست نووسرێتەوە.", "Papers are authored or imported from CSV/Excel instead of being retyped."),
             ("بێ ئینتەرنێت لە کاتی تاقیکردنەوە", "No internet during the exam", "لەسەر سێرڤەرێکی ناوخۆیی کار دەکات؛ هیچ وەڵامێک لەدەست ناچێت.", "Runs on a local server; no answer is lost."),
             ("نمرەدان بە یەکجا", "One-pass grading", "هەموو وەڵامەکان یەکجا هەڵدەسەنگێنرێن و ڕاپۆرت دروست دەبێت.", "Every answer is graded together and reports are generated."),
         ],
         how=[
-            ("تاقیکردنەوە دروست بکە", "Build the exam", "پرسیارەکان بە CSV،JSON هاوردە دەکرێن یان دەنووسرێن.", "Import questions from CSV/JSON or write them."),
+            ("تاقیکردنەوە دروست بکە", "Build the exam", "پرسیارەکان بە CSV،JSON هاوردە دەکرێن یان دەنووسرێن.", "Import questions from CSV or author them with six question types."),
             ("بڵاوی بکەوە", "Publish", "کۆدێک بۆ خوێندکاران؛ شاشەی تاقیکردنەوە و کاتژمێر.", "An access code for students; exam screen and timer."),
             ("ئەنجام ببینە", "See results", "نمرە، فلتەر، CSV و چاپ.", "Marks, filters, CSV and printing."),
         ],
-        stats=[("٥٧", "تاقیکردنەوە لە ساڵێک", "exams in a year"),
-               ("٥٧٠٠+", "ئەنجامی تۆمارکراو", "results recorded"),
+        stats=[("٦١", "تاقیکردنەوە لە بانکی سیستەم", "exams in the system bank"),
+               ("٢,١٣٤", "ئەنجامی تۆمارکراو", "results recorded"),
                ("٥٠", "خوێندکار بەیەکەوە", "students at once")],
-        packages=[("پەیمانگا", "Institute", "١,٠٠٠,٠٠٠ دینار", "1,000,000 IQD", "تا ٣٠٠ خوێندکار ، ساڵانە ٣٠٠,٠٠٠", "up to 300 students, 300,000/yr"),
-                  ("زانکۆ", "University", "٢,٠٠٠,٠٠٠ دینار", "2,000,000 IQD", "تا ١,٥٠٠ خوێندکار ، ساڵانە ٥٠٠,٠٠٠", "up to 1,500 students, 500,000/yr"),
+        packages=[("پەیمانگا", "Institute", "١,٥٠٠ دۆلار", "$1,500", "تا ٣٠٠ خوێندکار، ساڵانە +٣٠٠ دۆلار", "up to 300 students, +$300/yr"),
+                  ("زانکۆ", "University", "٢,٠٠٠ دۆلار", "$2,000", "تا ١,٥٠٠ خوێندکار، ساڵانە +٣٠٠ دۆلار", "up to 1,500 students, +$300/yr"),
                   ("تایبەت", "Custom", "پەیوەندی بکە", "contact us", "بێ سنوور و چەند کەمپەس", "unlimited / multi-campus")],
     ),
     "app": dict(
@@ -240,7 +240,7 @@ ENRICH = {
             ("ڕۆڵ و دەسەڵات بۆ کاشێر و بەڕێوەبەر", "Roles and permissions for cashier and manager"),
             ("کۆنتەرۆلی سندوق و ڕاپۆرتی ڕۆژانە", "Cash drawer control and daily reports"),
             ("کۆمیشنی ئەپی گەیاندن وەک خەرجی", "Delivery commission recorded as an expense"),
-            ("PWA ، کارکردن لە وێبگەڕ بێ دامەزراندن", "PWA — runs in the browser, no install"),
+            ("PWA، کارکردن لە وێبگەڕ بێ دامەزراندن", "PWA — runs in the browser, no install"),
         ],
         faq=[
             ("بە چ زمانێکە؟", "Which languages?", "کوردی، عەرەبی، فارسی و ئینگلیزی، RTL تەواو.", "Kurdish, Arabic, Persian and English, full RTL."),
@@ -287,7 +287,7 @@ ENRICH = {
             ("چاپکردنی خۆکاری پسووڵە بە Bluetooth", "Automatic Bluetooth receipt printing"),
             ("تیکتی چێشتخانە بێ نرخ", "Kitchen ticket without prices"),
             ("مێنیو بە دوو ناو (کوردی،ئینگلیزی)", "Menu with two names (Kurdish/English)"),
-            ("داتا لەسەر ئامێر ، بێ کرێی مانگانە", "On-device data — no monthly bill"),
+            ("داتا لەسەر ئامێر، بێ کرێی مانگانە", "On-device data — no monthly bill"),
         ],
         faq=[
             ("ئینتەرنێت پێویستە؟", "Is internet required?", "نا؛ تەنها WiFi ی دوکان یان هۆتسپۆتی مۆبایل.", "No — only local WiFi or a phone hotspot."),
@@ -365,7 +365,7 @@ HEAD = """<!DOCTYPE html>
 <header class="nav" id="nav">
   <div class="wrap nav-in">
     <a class="brand" href="../index.html" aria-label="Kisra Tech">
-      <img class="ku" src="../assets/logo/lockup-ku.png" alt="Kisra Tech ، کیسرا تێک">
+      <img class="ku" src="../assets/logo/lockup-ku.png" alt="Kisra Tech، کیسرا تێک">
       <img class="en" src="../assets/logo/lockup-en.png" alt="Kisra Tech">
     </a>
     <nav class="nav-links" id="navLinks">
@@ -440,7 +440,7 @@ BODY = """<main class="product-page">
     <div class="wrap">
       <div class="mono kicker">SCREENS</div>
       <h2><span class="ku">شاشەکان</span><span class="en">Screens</span></h2>
-      <div class="shots-grid">{shots}</div>
+      <div class="shots-grid{shots_class}">{shots}</div>
     </div>
   </section>
 
@@ -478,6 +478,8 @@ BODY = """<main class="product-page">
     </div>
   </section>
 
+  {works}
+
   <section class="cta">
     <div class="wrap">
       <div class="cta-card reveal">
@@ -507,6 +509,8 @@ BODY = """<main class="product-page">
 </body>
 </html>
 """
+
+WORKS_HTML = '<div class="pp-work"><img src="assets/shots/app-poshya.webp" alt="Poshya" loading="lazy"><div><b><span class="ku">پۆشیا</span><span class="en">Poshya</span></b><p><span class="ku">بازاڕگەیەکی مۆدەی سێ زمانەیە بۆ کڕیار و فرۆشگاکان لە کوردستان و عێراق.</span><span class="en">A trilingual fashion marketplace for shoppers and stores across Kurdistan and Iraq.</span></p></div></div>\n<div class="pp-work"><div><b><span class="ku">فێرگە</span><span class="en">Ferga</span></b><p><span class="ku">مارکێتپلەیسێکی خوێندنە کە خوێندکاران بە مامۆستا و سەنتەر و قوتابخانەکان دەگەینێت.</span><span class="en">An ed-tech marketplace connecting students with tutors, centres and schools.</span></p></div></div>\n<div class="pp-work"><img src="assets/shots/ecommerce-jumla.webp" alt="Jumla Iraq" loading="lazy"><div><b><span class="ku">جوملە عێراق</span><span class="en">Jumla Iraq</span></b><p><span class="ku">بازاڕگەیەکی B2B بۆ کۆمپانیا و فرۆشیارەکانی عێراق کە داواکاری نرخ و کاتالۆگی کۆ لە یەک شوێن کۆ دەکاتەوە.</span><span class="en">A B2B wholesale marketplace connecting Iraqi businesses with verified suppliers.</span></p></div></div>\n<div class="pp-work"><img src="assets/shots/website-shaz.webp" alt="Shaz Print" loading="lazy"><div><b><span class="ku">شاز</span><span class="en">Shaz Print</span></b><p><span class="ku">ماڵپەڕێکی کوردی و ڕاست بۆ چەپ بۆ کۆمپانیایەکی چاپ و ڕیکلام لە گەرمیان.</span><span class="en">A Kurdish RTL marketing site for a print and advertising company in Garmian.</span></p></div></div>\n<div class="pp-work"><img src="assets/shots/exam-puplis.webp" alt="Puplis" loading="lazy"><div><b><span class="ku">پوپلیس</span><span class="en">Puplis</span></b><p><span class="ku">سیستەمێکی تاقیکردنەوەی ئۆفلاینە بۆ پەیمانگا و زانکۆکان کە لە کاتی تاقیکردنەوەدا پێویستی بە ئینتەرنێت نییە.</span><span class="en">An offline exam platform for institutes and universities that needs no internet during the test.</span></p></div></div>'
 
 LONG_CATALOGUE = ("kisra-catalogue-long-a4.pdf", "کاتالۆگی تەواوی کۆمپانیا (٨ بەرهەم)", "Full company catalogue (8 products)")
 
@@ -541,7 +545,7 @@ def build():
         mkt = marketing_pdfs(p["key"])
         dl = []
         for f, l_ku, l_en in mkt:
-            dl.append((f, f"کاتالۆگی فەرمی ، {l_ku}", f"Marketing catalogue — {l_en}"))
+            dl.append((f, f"کاتالۆگی فەرمی، {l_ku}", f"Marketing catalogue — {l_en}"))
         dl.append((p["pdfs"][0][0], "پەڕەی بەرهەم (١ لاپەڕە)", "Product sheet (1 page)"))
         for f, ku, en in p["pdfs"][1:]:
             if not f.startswith("marketing/"):
@@ -566,6 +570,18 @@ def build():
             for q_ku, q_en, a_ku, a_en in p["faq"])
         tech = "\n".join(f'<span class="chip">{t}</span>' for t in p["tech"])
 
+        if p["key"] in ("custom", "app", "ecommerce", "website"):
+            works_block = ("""  <section class="section pp-works">
+    <div class="wrap">
+      <div class="mono kicker">PROOF</div>
+      <h2><span class="ku">کارەکانی پێشوو</span><span class="en">Previous work</span></h2>
+      <p class="pp-note"><span class="ku">ئەم سیستەمانە دروستکراون و بەکاردێن، نەک نموونەی خەیاڵی.</span><span class="en">These are real systems we built and shipped, not mockups.</span></p>
+      <div class="pp-works-grid">""" + WORKS_HTML + """</div>
+    </div>
+  </section>""")
+        else:
+            works_block = ""
+        shots_class = " single" if len(p["shots"]) == 1 else (" triple" if len(p["shots"]) == 3 else "")
         html_out = (HEAD + BODY).format(
             key=p["key"], ku=p["ku"], en=p["en"],
             tag_ku=html.escape(p["tag_ku"]), tag_en=html.escape(p["tag_en"]),
@@ -577,6 +593,7 @@ def build():
             faq=faq, hero=p["shots"][0],
             catalog=catalog, preview_pdf=preview_pdf, preview_key=preview_key,
             wa=WA, phone=PHONE, phone_raw=PHONE.replace(" ", ""), mail=MAIL,
+            works=works_block, shots_class=shots_class,
         )
         with open(os.path.join(OUT, p["key"] + ".html"), "w", encoding="utf-8") as f:
             f.write(html_out)
